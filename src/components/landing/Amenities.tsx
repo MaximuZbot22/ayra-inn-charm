@@ -3,7 +3,7 @@ import {
   Car,
   Snowflake,
   Shirt,
-  Concierge,
+  BellRing,
   UtensilsCrossed,
 } from "lucide-react";
 import { Reveal } from "./Reveal";
@@ -13,7 +13,7 @@ const items = [
   { icon: Car, title: "Free Parking", desc: "On-site parking for guests." },
   { icon: Snowflake, title: "Air Conditioning", desc: "Cool, quiet rooms all year." },
   { icon: Shirt, title: "Laundry Service", desc: "Same-day on request." },
-  { icon: Concierge, title: "24/7 Reception", desc: "Check in any time of day." },
+  { icon: BellRing, title: "24/7 Reception", desc: "Check in any time of day." },
   { icon: UtensilsCrossed, title: "Nearby Restaurants", desc: "Walk to local eateries." },
 ];
 
