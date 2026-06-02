@@ -10,33 +10,44 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as RoomsChar123CategoryChar125RouteImport } from './routes/rooms.{-$category}'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RoomsChar123CategoryChar125Route =
+  RoomsChar123CategoryChar125RouteImport.update({
+    id: '/rooms/{-$category}',
+    path: '/rooms/{-$category}',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/rooms/{-$category}': typeof RoomsChar123CategoryChar125Route
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/rooms/{-$category}': typeof RoomsChar123CategoryChar125Route
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/rooms/{-$category}': typeof RoomsChar123CategoryChar125Route
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/rooms/{-$category}'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/rooms/{-$category}'
+  id: '__root__' | '/' | '/rooms/{-$category}'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  RoomsChar123CategoryChar125Route: typeof RoomsChar123CategoryChar125Route
 }
 
 declare module '@tanstack/react-router' {
@@ -48,22 +59,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/rooms/{-$category}': {
+      id: '/rooms/{-$category}'
+      path: '/rooms/{-$category}'
+      fullPath: '/rooms/{-$category}'
+      preLoaderRoute: typeof RoomsChar123CategoryChar125RouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  RoomsChar123CategoryChar125Route: RoomsChar123CategoryChar125Route,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
