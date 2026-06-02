@@ -57,7 +57,7 @@ function Index() {
       <main>
         <Hero />
         <InfoBar />
-        <Rooms />
+        <RoomsTeaser />
         <Amenities />
         <Gallery />
         <About />
