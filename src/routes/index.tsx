@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Navbar } from "@/components/landing/Navbar";
 import { Hero } from "@/components/landing/Hero";
 import { InfoBar } from "@/components/landing/InfoBar";
-import { Rooms } from "@/components/landing/Rooms";
+import { RoomsTeaser } from "@/components/landing/RoomsTeaser";
 import { Amenities } from "@/components/landing/Amenities";
 import { Gallery } from "@/components/landing/Gallery";
 import { About } from "@/components/landing/About";
