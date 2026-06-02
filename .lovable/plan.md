@@ -1,71 +1,92 @@
-# Ayra Inn — Hotel Landing Page
+## Goal
 
-Single-page, mobile-first landing site. No booking, no auth — CTAs link to `tel:`, in-page anchors, and Google Maps.
+Turn the current static `Rooms` section into a two-level experience:
 
-## Brand decision
+1. **Home** — a compact teaser with 3 stacked cards (Standard / Executive / Suite) that link into a dedicated rooms page.
+2. **`/rooms` page** — a full browsing page with collapsible categories. Each room expands inline to show a small image carousel + short description + amenities.
 
-The brief mentions teal, but the uploaded logo is **deep forest green + warm gold** on white. I'll align the palette to the logo (premium, warmer, more "inn"-like) and reference "Ayra Inn" everywhere — not "Nice Day" (that was leftover from the earlier brief). If you'd rather keep teal as the accent, say so and I'll swap.
+Routing is real (TanStack Router), so the browser back button returns the user to exactly where they were on the home page — no full reload, scroll position preserved.
 
-- Primary: deep forest green `oklch(0.32 0.05 155)`
-- Accent: warm gold `oklch(0.72 0.11 75)`
-- Surfaces: white + soft warm gray
-- Text: dark charcoal
+## Room inventory (from your message)
 
-## Design system (`src/styles.css`)
+- **Standard** — 4× Executive Rooms (single bedroom + attached bathroom)
+- **Deluxe** — 3× Executive Suites (sitting area + bedroom, open layout)
+- **Family** — 1× 2BHK Apartment (2 bedrooms, hall, kitchen, sleeps 7)
 
-- Add brand tokens (`--primary`, `--accent`, `--brand-cream`) in oklch
-- Rounded corners (`--radius: 0.875rem`), soft shadows, generous spacing
-- Inter via Google Fonts in `__root.tsx`, with optional Cormorant serif for the logo wordmark to echo the logo
-- Global scrollbar hidden (keep touch/keyboard scroll)
-- Subtle fade-in-up keyframes + hover-scale utility
+Naming uses the existing `Standard / Deluxe / Family` labels per your choice, with the original room type shown as a subtitle (e.g. "Deluxe · Executive Suite").
 
-## Route + components
+## Home page — "Rooms we have available"
 
-Single page at `src/routes/index.tsx` (replaces placeholder). Sections live in `src/components/landing/`:
+Replaces the current `Rooms.tsx` grid. New layout:
 
-- **Navbar.tsx** — sticky. Desktop: clean white blurred bar with logo mark + "Ayra Inn" wordmark + anchor links. Mobile: floating translucent pill over hero, teal/green-tinted hamburger button with animated Menu↔X.
-- **MobileMenu.tsx** — full-screen Framer Motion overlay (not shadcn Sheet). Forest-green gradient bg, faint hero texture, gold radial glow. Numbered display-size links (`01 — Home`…), staggered entrance, big tappable Call card, Get Directions pill + socials, "Kochi, Kerala · Open 24/7" footnote. Body scroll lock, close on link/Escape/backdrop.
-- **Hero.tsx** — full-bleed hotel image, dark overlay melting into next section. Mobile: `min-h-[92svh]`, "Open now · 24/7" pulse chip, two-line headline ("Comfortable Rooms." / "Simple Stay." in cream italic), small star/trust line, solid primary "Check Availability" + ghost "or call +91 98765 43210", animated scroll-down chevron. Desktop: larger type, two-button layout.
-- **InfoBar.tsx** — 5 quick-info cards (Clock, Wifi, Snowflake, Car, Users).
-- **Rooms.tsx** — 3 cards (Standard / Deluxe / Family): image, ₹ price/night, feature list, "Call to Book" → `tel:`.
-- **Amenities.tsx** — 6-icon grid (Wifi, Car, Snowflake, Shirt, Concierge/Clock, UtensilsCrossed).
-- **Gallery.tsx** — responsive CSS grid with varied spans.
-- **About.tsx** — short paragraph + soft image. Copy updated to reference Ayra Inn.
-- **Location.tsx** — Google Maps `<iframe>` Kochi embed (no API key), address, phone, "Get Directions" → `maps/dir/?api=1&destination=Kochi,Kerala`.
-- **Footer.tsx** — name, contact, address, quick links, social icons.
+- Section heading stays ("Pick the room that suits your stay").
+- Three cards in a stacked/overlapping arrangement on desktop — middle card front and slightly larger, the two outer cards rotated/offset behind it. On mobile they stack vertically (no overlap, just normal cards).
+- Each card shows: cover image, category name, room type subtitle, count badge ("4 rooms available"), starting price, and a "View rooms →" affordance.
+- The whole card is a `<Link to="/rooms/$category" params={{category: "executive"}}>` — clicking deep-links into the rooms page with that category pre-expanded.
 
-All sections wrapped in lightweight Framer Motion `whileInView` fade-up.
+## `/rooms` page
 
-## Imagery
+New route `src/routes/rooms.$category.tsx` with `$category` as an **optional** segment so both `/rooms` and `/rooms/executive` work.
 
-Generate 8 images with `imagegen` (fast tier, jpg) into `src/assets/`:
+Structure:
 
-- `hero.jpg` — warm exterior of small modern Indian boutique inn at golden hour
-- `room-standard.jpg`, `room-deluxe.jpg`, `room-family.jpg`
-- `gallery-1/2/3.jpg` — lobby, bathroom detail, breakfast corner
-- `about.jpg` — facade / hallway
+```text
+Header (sticky, slim) — back link, "Our Rooms" title
+Intro paragraph
+─────────────────────────────
+[▼] Standard Rooms · 4 available          ← collapsible category
+     ├── Room 1   [▼ click to expand]
+     │     ↳ image carousel + description + amenities + Call to Book
+     ├── Room 2   [▶]
+     ├── Room 3   [▶]
+     └── Room 4   [▶]
+[▶] Deluxe Suites · 3 available
+[▶] Family Apartment · 1 available
+```
 
-Logo: copy uploaded image to `src/assets/ayra-inn-logo.png`, use in Navbar + Footer.
+Behavior:
 
-## CTAs
+- Two-level accordion (shadcn `Accordion` already in the project). Outer accordion = categories, inner accordion = individual rooms.
+- Multiple panels can be open at once (`type="multiple"`).
+- When arriving from a home card, the matching category is auto-opened; other categories stay collapsed.
+- Each individual room, when expanded, shows: 4–6 placeholder images in a small carousel (shadcn `Carousel`, already installed), a 1–2 sentence description, an amenities row (icons), and a "Call to Book" button (`tel:` link to existing `SITE.phoneHref`).
+- Placeholder images: reuse existing `room-standard.jpg`, `room-deluxe.jpg`, `room-family.jpg`, `gallery-1/2/3.jpg` from `src/assets/`. Each room gets a 4-image set cycled from this pool — easy to swap with your real photos later.
 
-- Call Now → `tel:+919876543210`
-- Check Availability → smooth scroll to `#rooms`
-- Get Directions → Google Maps URL above
+## History / back-button behavior
 
-## SEO
+This is handled for free by TanStack Router:
 
-Override `head()` in `src/routes/index.tsx`:
+- Clicking a card uses `<Link>` → real client-side navigation pushes onto history.
+- Browser back returns to `/` without a hard reload; React state is preserved (the rest of the home page stays mounted-in-memory because TanStack keeps route trees, and scroll restoration is already enabled in `src/router.tsx`).
+- The expanded accordion state on `/rooms` is encoded via the URL param (`/rooms/executive`), so reopening the back/forward stack restores what the user was looking at.
 
-- title: "Ayra Inn — Comfortable Rooms in Kochi, Kerala"
-- description (~155 chars) about clean 24/7 rooms
-- og:title, og:description, og:image (hero), twitter card
-- Single H1 in Hero
+## Files
+
+**New**
+- `src/routes/rooms.$category.tsx` — the rooms page (optional `$category` param via `{-$category}` syntax).
+- `src/components/landing/RoomsTeaser.tsx` — new 3-card stacked teaser used on home.
+- `src/components/landing/RoomCategory.tsx` — outer collapsible category wrapper.
+- `src/components/landing/RoomCard.tsx` — inner collapsible single-room card with image carousel.
+- `src/lib/rooms.ts` — single source of truth for room data (categories, counts, per-room name/description/amenities/image list).
+
+**Edited**
+- `src/routes/index.tsx` — swap `<Rooms />` for `<RoomsTeaser />`.
+- `src/components/landing/Navbar.tsx` / `MobileMenu.tsx` — point the "Rooms" link to `/rooms` instead of `#rooms`.
+- `src/lib/site.ts` — update the nav anchor entry.
+
+**Removed**
+- `src/components/landing/Rooms.tsx` (replaced by `RoomsTeaser` + the new `/rooms` page).
 
 ## Technical notes
 
-- Tailwind v4 tokens in `src/styles.css` `@theme inline`
-- New dep: `framer-motion` (via `bun add`)
-- shadcn Button + Card reused; Sheet not needed (custom mobile menu)
-- No new routes, no backend, no Lovable Cloud
-- No booking, forms, auth, or database
+- Route file uses `createFileRoute("/rooms/{-$category}")` so `/rooms` and `/rooms/standard|deluxe|family` all resolve to the same component.
+- The component reads `Route.useParams()` to get `category`, validates it against the 3 known slugs (anything else → all collapsed), and passes it to the accordion's `defaultValue`.
+- `head()` on the new route sets a distinct title/description ("Our Rooms — Ayra Inn") and adds canonical + og tags per the route-architecture rules. Category-specific titles when `category` is present (e.g. "Executive Suites — Ayra Inn").
+- No new dependencies. Reuses Framer Motion, shadcn `Accordion`, shadcn `Carousel`, existing tokens and `Reveal` wrapper.
+- Mobile-first: cards stack at <768px; stacked/overlapping teaser only on `md:`+.
+
+## Out of scope
+
+- No booking flow, no forms, no auth.
+- No image uploads yet — placeholders only, structured so you can drop real photos into `src/lib/rooms.ts` later.
+- No changes to Hero, InfoBar, Amenities, Gallery, About, Location, Footer.
