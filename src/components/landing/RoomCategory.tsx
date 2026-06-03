@@ -1,47 +1,36 @@
-import {
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { RoomCardList } from "./RoomCard";
+import { RoomCard } from "./RoomCard";
 import type { RoomCategory as RoomCategoryT } from "@/lib/rooms";
 
 export function RoomCategorySection({ category }: { category: RoomCategoryT }) {
   return (
-    <AccordionItem
-      value={category.slug}
-      className="overflow-hidden rounded-2xl border border-border/60 bg-card shadow-card"
-    >
-      <AccordionTrigger className="px-5 sm:px-6 py-5 hover:no-underline">
-        <div className="flex flex-1 items-center gap-4 text-left">
-          <img
-            src={category.cover}
-            alt=""
-            className="h-16 w-16 rounded-xl object-cover"
-            loading="lazy"
-          />
-          <div className="flex-1">
-            <p className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
-              {category.subtitle}
-            </p>
-            <div className="font-display text-2xl font-semibold text-foreground">
-              {category.name}
-            </div>
-            <div className="text-xs text-muted-foreground mt-0.5">
-              {category.rooms.length}{" "}
-              {category.rooms.length === 1 ? "room" : "rooms"} available · from{" "}
-              <span className="text-primary font-semibold">
-                {category.startingPrice}
-              </span>{" "}
-              / night
-            </div>
-          </div>
+    <section id={category.slug} className="scroll-mt-28">
+      <header className="border-t border-border pt-8 mb-10">
+        <span className="block text-xs font-semibold tracking-widest text-primary uppercase mb-2">
+          {category.subtitle}
+        </span>
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <h2 className="font-display text-3xl sm:text-4xl font-semibold text-foreground">
+            {category.name}
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            {category.rooms.length}{" "}
+            {category.rooms.length === 1 ? "room" : "rooms"} available · from{" "}
+            <span className="text-primary font-semibold">
+              {category.startingPrice}
+            </span>{" "}
+            / night
+          </p>
         </div>
-      </AccordionTrigger>
-      <AccordionContent className="px-5 sm:px-6 pb-6">
-        <p className="text-sm text-muted-foreground mb-5">{category.blurb}</p>
-        <RoomCardList rooms={category.rooms} />
-      </AccordionContent>
-    </AccordionItem>
+        <p className="text-muted-foreground mt-4 max-w-2xl leading-relaxed">
+          {category.blurb}
+        </p>
+      </header>
+
+      <div className="space-y-16">
+        {category.rooms.map((room, i) => (
+          <RoomCard key={room.id} room={room} category={category} index={i} />
+        ))}
+      </div>
+    </section>
   );
 }
