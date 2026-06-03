@@ -83,23 +83,23 @@ function TeaserCard({ item }: { item: TeaserItem }) {
       to="/rooms/{-$category}"
       params={{ category: item.slug }}
       className={cn(
-        "group relative flex flex-col p-8 sm:p-10 min-h-[420px] text-white transition-colors",
+        "group relative flex flex-col p-7 sm:p-10 min-h-[340px] md:min-h-[420px] text-white transition-colors",
         TONE_BG[item.tone],
       )}
     >
-      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm">
-        <Icon size={22} className="text-white" />
+      <div className="flex h-11 w-11 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm">
+        <Icon size={20} className="text-white" />
       </div>
 
-      <h3 className="mt-10 font-display text-3xl sm:text-4xl font-semibold leading-tight">
+      <h3 className="mt-8 font-display text-3xl sm:text-4xl font-semibold leading-tight">
         {item.title}
       </h3>
 
-      <p className="mt-4 text-sm leading-relaxed text-white/85 max-w-xs">
+      <p className="mt-3 text-sm leading-relaxed text-white/85 max-w-sm">
         {item.description}
       </p>
 
-      <div className="mt-auto pt-10">
+      <div className="mt-auto pt-8">
         <span className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-primary-deep transition-all group-hover:gap-3">
           Learn More
           <ArrowRight size={15} />
