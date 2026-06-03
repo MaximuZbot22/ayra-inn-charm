@@ -1,17 +1,51 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, BedSingle, Users, Sparkles, type LucideIcon } from "lucide-react";
 import { Reveal } from "./Reveal";
-import { ROOM_CATEGORIES } from "@/lib/rooms";
+import type { CategorySlug } from "@/lib/rooms";
 import { cn } from "@/lib/utils";
 
-export function RoomsTeaser() {
-  // Order: standard, family (middle/front), deluxe — so middle card is the highlight
-  const ordered = [
-    ROOM_CATEGORIES[0],
-    ROOM_CATEGORIES[2],
-    ROOM_CATEGORIES[1],
-  ];
+type TeaserItem = {
+  slug: CategorySlug;
+  title: string;
+  description: string;
+  Icon: LucideIcon;
+  tone: "mid" | "deep" | "darkest";
+};
 
+const ITEMS: TeaserItem[] = [
+  {
+    slug: "standard",
+    title: "Standard",
+    description:
+      "Clean, comfortable single rooms with attached bathroom. Ideal for short stays and solo travellers.",
+    Icon: BedSingle,
+    tone: "mid",
+  },
+  {
+    slug: "family",
+    title: "Family",
+    description:
+      "Full 2BHK apartment with 2 bedrooms, a hall, and a kitchen. Sleeps up to 7 — perfect for families.",
+    Icon: Users,
+    tone: "deep",
+  },
+  {
+    slug: "deluxe",
+    title: "Executive Suites",
+    description:
+      "Spacious open-plan suite with a sitting area and king bed. Great for longer or premium stays.",
+    Icon: Sparkles,
+    tone: "darkest",
+  },
+];
+
+const TONE_BG: Record<TeaserItem["tone"], string> = {
+  mid: "bg-primary",
+  deep: "bg-primary-deep",
+  darkest: "bg-[color-mix(in_oklab,var(--primary-deep)_70%,black)]",
+};
+
+export function RoomsTeaser() {
   return (
     <section id="rooms" className="px-6 py-20 sm:py-28">
       <div className="mx-auto max-w-6xl">
@@ -21,7 +55,7 @@ export function RoomsTeaser() {
               Our Rooms
             </p>
             <h2 className="mt-3 font-display text-4xl sm:text-5xl font-semibold text-foreground">
-              Rooms we have available.
+              Pick the room that suits your stay.
             </h2>
             <p className="mt-4 text-muted-foreground text-balance">
               Three styles to choose from — tap a card to explore every room in
@@ -30,92 +64,46 @@ export function RoomsTeaser() {
           </div>
         </Reveal>
 
-        {/* Mobile: clean stacked cards */}
-        <div className="mt-12 grid gap-5 md:hidden">
-          {ROOM_CATEGORIES.map((c, i) => (
-            <Reveal key={c.slug} delay={i * 0.06}>
-              <TeaserCard category={c} />
-            </Reveal>
-          ))}
-        </div>
-
-        {/* Desktop: stacked / overlapping with middle card in front */}
-        <div className="mt-16 hidden md:grid md:grid-cols-3 md:gap-6 md:items-center">
-          {ordered.map((c, i) => {
-            const isMiddle = i === 1;
-            return (
-              <Reveal key={c.slug} delay={i * 0.08}>
-                <div
-                  className={cn(
-                    "transition-transform duration-500",
-                    isMiddle
-                      ? "md:scale-105 md:z-10"
-                      : i === 0
-                        ? "md:-rotate-2 md:translate-x-4 md:opacity-95"
-                        : "md:rotate-2 md:-translate-x-4 md:opacity-95",
-                  )}
-                >
-                  <TeaserCard category={c} highlight={isMiddle} />
-                </div>
-              </Reveal>
-            );
-          })}
-        </div>
+        <Reveal delay={0.1}>
+          <div className="mt-12 overflow-hidden rounded-2xl shadow-soft grid grid-cols-1 md:grid-cols-3">
+            {ITEMS.map((item) => (
+              <TeaserCard key={item.slug} item={item} />
+            ))}
+          </div>
+        </Reveal>
       </div>
     </section>
   );
 }
 
-function TeaserCard({
-  category,
-  highlight,
-}: {
-  category: (typeof ROOM_CATEGORIES)[number];
-  highlight?: boolean;
-}) {
+function TeaserCard({ item }: { item: TeaserItem }) {
+  const { Icon } = item;
   return (
     <Link
       to="/rooms/{-$category}"
-      params={{ category: category.slug }}
+      params={{ category: item.slug }}
       className={cn(
-        "group relative flex flex-col overflow-hidden rounded-2xl bg-card border border-border/60 transition-all hover:-translate-y-1",
-        highlight ? "shadow-soft" : "shadow-card hover:shadow-soft",
+        "group relative flex flex-col p-8 sm:p-10 min-h-[420px] text-white transition-colors",
+        TONE_BG[item.tone],
       )}
     >
-      <div className="relative aspect-[4/3] overflow-hidden">
-        <img
-          src={category.cover}
-          alt={category.name}
-          loading="lazy"
-          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-        />
-        <div className="absolute top-3 left-3 rounded-full bg-white/90 backdrop-blur px-3 py-1 text-[11px] font-medium text-primary-deep">
-          {category.rooms.length}{" "}
-          {category.rooms.length === 1 ? "room" : "rooms"} available
-        </div>
+      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm">
+        <Icon size={22} className="text-white" />
       </div>
-      <div className="flex flex-1 flex-col p-6">
-        <p className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
-          {category.subtitle}
-        </p>
-        <h3 className="mt-1 font-display text-2xl font-semibold text-foreground">
-          {category.name}
-        </h3>
-        <p className="mt-2 text-sm text-muted-foreground line-clamp-2">
-          {category.blurb}
-        </p>
-        <div className="mt-5 flex items-baseline justify-between">
-          <div>
-            <span className="text-xs text-muted-foreground">from </span>
-            <span className="text-lg font-semibold text-primary">
-              {category.startingPrice}
-            </span>
-            <span className="text-xs text-muted-foreground"> / night</span>
-          </div>
-          <span className="inline-flex items-center gap-1 text-sm font-semibold text-primary group-hover:gap-2 transition-all">
-            View rooms <ArrowRight size={15} />
-          </span>
-        </div>
+
+      <h3 className="mt-10 font-display text-3xl sm:text-4xl font-semibold leading-tight">
+        {item.title}
+      </h3>
+
+      <p className="mt-4 text-sm leading-relaxed text-white/85 max-w-xs">
+        {item.description}
+      </p>
+
+      <div className="mt-auto pt-10">
+        <span className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-primary-deep transition-all group-hover:gap-3">
+          Learn More
+          <ArrowRight size={15} />
+        </span>
       </div>
     </Link>
   );
