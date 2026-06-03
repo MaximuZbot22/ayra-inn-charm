@@ -1,94 +1,115 @@
-import { Phone, Check } from "lucide-react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { Phone } from "lucide-react";
+import { useEffect, useState } from "react";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  type CarouselApi,
 } from "@/components/ui/carousel";
 import { SITE } from "@/lib/site";
-import type { Room } from "@/lib/rooms";
+import type { Room, RoomCategory } from "@/lib/rooms";
+import { cn } from "@/lib/utils";
 
-export function RoomCard({ room }: { room: Room }) {
+type Props = {
+  room: Room;
+  category: RoomCategory;
+  index: number;
+};
+
+export function RoomCard({ room, category, index }: Props) {
+  const total = category.rooms.length;
+  const eyebrow =
+    total === 1
+      ? "Exclusive Unit"
+      : `${category.name} · Room ${index + 1} of ${total}`;
+
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    if (!api) return;
+    setCurrent(api.selectedScrollSnap());
+    api.on("select", () => setCurrent(api.selectedScrollSnap()));
+  }, [api]);
+
   return (
-    <AccordionItem
-      value={room.id}
-      className="rounded-xl border border-border/60 bg-card px-4 sm:px-5"
-    >
-      <AccordionTrigger className="py-4 hover:no-underline">
-        <div className="flex flex-1 items-center gap-4 text-left">
-          <img
-            src={room.images[0]}
-            alt=""
-            className="h-14 w-14 rounded-lg object-cover"
-            loading="lazy"
-          />
-          <div>
-            <div className="font-display text-lg font-semibold text-foreground">
-              {room.name}
-            </div>
-            <div className="text-xs text-muted-foreground">
-              Tap to view photos
-            </div>
-          </div>
-        </div>
-      </AccordionTrigger>
-      <AccordionContent className="pb-5">
-        <div className="space-y-5">
-          <Carousel className="w-full">
-            <CarouselContent>
-              {room.images.map((src, i) => (
-                <CarouselItem key={i}>
-                  <div className="overflow-hidden rounded-xl aspect-[16/10] bg-muted">
-                    <img
-                      src={src}
-                      alt={`${room.name} photo ${i + 1}`}
-                      loading="lazy"
-                      className="h-full w-full object-cover"
-                    />
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className="left-2" />
-            <CarouselNext className="right-2" />
-          </Carousel>
-
-          <p className="text-sm text-muted-foreground">{room.description}</p>
-
-          <ul className="grid grid-cols-2 gap-2 text-sm text-muted-foreground sm:grid-cols-3">
-            {room.amenities.map((a) => (
-              <li key={a} className="flex items-center gap-2">
-                <Check size={14} className="text-primary shrink-0" />
-                {a}
-              </li>
+    <article className="group">
+      <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-muted shadow-soft mb-6">
+        <Carousel setApi={setApi} className="h-full w-full">
+          <CarouselContent className="h-full">
+            {room.images.map((src, i) => (
+              <CarouselItem key={i} className="h-full">
+                <img
+                  src={src}
+                  alt={`${room.name} photo ${i + 1}`}
+                  loading={index === 0 && i === 0 ? "eager" : "lazy"}
+                  className="h-full w-full object-cover aspect-[16/10] transition-transform duration-700 group-hover:scale-105"
+                />
+              </CarouselItem>
             ))}
-          </ul>
+          </CarouselContent>
+          <CarouselPrevious className="left-3 hidden md:flex opacity-0 group-hover:opacity-100 transition-opacity" />
+          <CarouselNext className="right-3 hidden md:flex opacity-0 group-hover:opacity-100 transition-opacity" />
+        </Carousel>
 
-          <a
-            href={SITE.phoneHref}
-            className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground transition hover:bg-primary-deep"
-          >
-            <Phone size={15} /> Call to Book
-          </a>
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 pointer-events-none">
+          {room.images.map((_, i) => (
+            <span
+              key={i}
+              className={cn(
+                "h-2 w-2 rounded-full shadow-sm transition-all",
+                i === current ? "bg-white" : "bg-white/50",
+              )}
+            />
+          ))}
         </div>
-      </AccordionContent>
-    </AccordionItem>
-  );
-}
+      </div>
 
-export function RoomCardList({ rooms }: { rooms: Room[] }) {
-  return (
-    <Accordion type="multiple" className="space-y-3">
-      {rooms.map((r) => (
-        <RoomCard key={r.id} room={r} />
-      ))}
-    </Accordion>
+      <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-start mb-4">
+        <div>
+          <span className="block text-xs font-medium uppercase tracking-wider text-primary mb-1">
+            {eyebrow}
+          </span>
+          <h3 className="font-display text-2xl font-medium text-foreground">
+            {room.name}
+          </h3>
+        </div>
+        <div className="sm:text-right">
+          <p className="text-xs uppercase tracking-tighter text-muted-foreground">
+            Starting from
+          </p>
+          <p className="text-xl font-semibold text-foreground">
+            {category.startingPrice}{" "}
+            <span className="text-sm font-normal text-muted-foreground">
+              / night
+            </span>
+          </p>
+        </div>
+      </div>
+
+      <p className="text-muted-foreground mb-6 max-w-2xl leading-relaxed">
+        {room.description}
+      </p>
+
+      <div className="flex flex-wrap gap-2 mb-8">
+        {room.amenities.slice(0, 4).map((a) => (
+          <span
+            key={a}
+            className="px-3 py-1 bg-muted border border-border rounded-full text-xs text-muted-foreground"
+          >
+            {a}
+          </span>
+        ))}
+      </div>
+
+      <a
+        href={SITE.phoneHref}
+        className="inline-flex w-full md:w-auto items-center justify-center gap-2 px-8 py-3.5 bg-primary hover:bg-primary-deep text-primary-foreground font-medium rounded-full transition-all shadow-soft"
+      >
+        <Phone size={15} /> Call to Book
+      </a>
+    </article>
   );
 }
