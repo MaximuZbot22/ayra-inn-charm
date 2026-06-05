@@ -1,88 +1,101 @@
-
 ## Goal
 
-Replace the cramped accordion-inside-accordion `/rooms` page with the **Editorial Gallery** direction you picked — every room gets its own full-width editorial card with a large 16:10 photo carousel, calm typography, and a generous "Call to Book" button. No more tiny thumbnails, no more nested collapsibles.
+Rebuild the `/rooms` page as a clean, Airbnb-style mobile-first browse experience with **4 listings** — Ayra 2BHK, Ayra Deluxe, Ayra Studio, Ayra Deluxe II — using the real photos and the amenity/description data you sent. Homepage teaser stays untouched.
 
-## Composition (per the picked prototype)
+## Images — I need you to upload them here
 
-Each individual room renders as a single editorial card, top to bottom:
+The Dropbox folder requires login, so I can't pull the photos directly. Please **drag the 4 folders into chat** (or upload them image-by-image) and label each batch with the folder name so I know which listing each photo belongs to:
 
-1. **Large image carousel** — 16:10, soft rounded-2xl, subtle shadow. shadcn `Carousel` with autoplay-free swipe + carousel dots overlaid bottom-center (matching the prototype's dot indicator). Hover zoom on desktop.
-2. **Meta row** — left: teal uppercase eyebrow ("Standard · Room 2 of 4"), then serif room name. Right: "Starting from" label + ₹price.
-3. **Description** — 1–2 sentence body, max-w-2xl, muted-foreground.
-4. **Amenity chips** — soft gray pill chips, wrap row.
-5. **Call to Book** — full-width pill on mobile, auto-width on desktop, teal-600 with soft teal shadow.
+- `Ayra 2BHK` — expecting Living room, Kitchen, Dining, Bedroom 1, Bedroom 2, Bathroom 1, Bathroom 2 shots
+- `Ayra delux`
+- `Ayra Deluxe II`
+- `Ayra Studio`
 
-Cards are stacked with `space-y-16`. No accordions, no expand/collapse. Everything is visible — that's the point.
+I'll auto-classify each image into its space group (Bedroom / Bathroom / Kitchen / Living / Exterior) by looking at it, and order the gallery as: cover → bedroom → living → kitchen/dining → bathroom → extras.
 
-## Page structure
+## Listings (final data)
+
+Hidden price everywhere — every CTA reads **"Call for rates"** and dials `SITE.phoneHref`.
+
+| Listing | Type | Capacity | Beds | Baths |
+| --- | --- | --- | --- | --- |
+| Ayra 2BHK | Entire rental unit | 5 guests | 2 bedrooms · 2 beds | 2 baths |
+| Ayra Deluxe | Entire rental unit | 2 guests | 1 bedroom · 1 bed | 1 bath |
+| Ayra Deluxe II | Entire rental unit | 2 guests | 1 bedroom · 1 bed | 1 bath |
+| Ayra Studio | Room (shared bath) | 1–2 guests | 1 bed | Shared bath |
+
+Amenities and per-room sub-groups (2BHK) come from the spec you pasted, verbatim.
+
+## Page (mobile-first, Airbnb-style)
 
 ```text
-┌────────────────────────────────────┐
-│ Navbar                             │
-├────────────────────────────────────┤
-│ ← Back to home                     │
-│ OUR ROOMS                          │
-│ Find the room that fits            │
-│ your stay.                         │
-│ intro paragraph                    │
-│                                    │
-│ ── Standard Rooms · 4 available ── │  ← quiet section divider
-│ [editorial card — Standard Room 1] │
-│ [editorial card — Standard Room 2] │
-│ [editorial card — Standard Room 3] │
-│ [editorial card — Standard Room 4] │
-│                                    │
-│ ── Deluxe Suites · 3 available  ── │
-│ [editorial card — Deluxe 1..3]     │
-│                                    │
-│ ── Family Apartment · 1 available ─│
-│ [editorial card — 2BHK]            │
-├────────────────────────────────────┤
-│ Footer                             │
-└────────────────────────────────────┘
+┌─────────────────────────────┐
+│ Navbar                      │
+├─────────────────────────────┤
+│ ← Back to home              │
+│ Stays at Ayra Inn           │
+│ 4 places to stay · Kochi    │
+│                             │
+│ ┌─────────────────────────┐ │  ← one card per listing
+│ │  [swipeable photo]   ♥  │ │     • 4:3 photo carousel w/ dots
+│ │  • • ◦ ◦                │ │     • swipe on mobile, arrows on desktop hover
+│ └─────────────────────────┘ │     • rounded-2xl, soft shadow
+│ Ayra 2BHK              ›    │  ← title row
+│ Entire rental unit in Kochi │  ← subtitle muted
+│ 5 guests · 2 BR · 2 ba      │  ← meta line
+│ Wifi · AC · Kitchen · TV +3 │  ← top amenities chip-line (truncated)
+│ ─────────────────────────── │
+│ [ Call for rates ]          │  ← full-width pill, teal
+│                             │
+│ ┌─────────────────────────┐ │
+│ │  Ayra Deluxe ...        │ │
+│ └─────────────────────────┘ │
+│  ...Studio, Deluxe II       │
+├─────────────────────────────┤
+│ Footer                      │
+└─────────────────────────────┘
 ```
 
-- Page width: `max-w-4xl` (matches prototype) — generous gutters on desktop, full-bleed on mobile.
-- Category dividers are simple — a teal eyebrow + serif H2 + count line + thin border-top. No collapsing.
-- When the URL has `/rooms/standard|deluxe|family`, the page **smooth-scrolls** to that category section on mount instead of expanding an accordion.
+- Cards stack with `space-y-8` on mobile, 2-column grid (`md:grid-cols-2`) from `md` up, 4:3 image ratio (Airbnb shape).
+- Single page only — **no detail route**. The amenities chip-line + meta is enough; "Call for rates" is the only action. (Per your scope answer.)
+- Header band is quiet: small "Stays at Ayra Inn" eyebrow, serif H1, count line. No big hero band.
+- Category deep-link param (`/rooms/{-$category}`) becomes a no-op for now since we don't have categories anymore — the route file still accepts the optional param but ignores it (keeps existing inbound links from breaking).
 
 ## Files
 
-**Edited (full rewrite)**
-- `src/routes/rooms.{-$category}.tsx` — drop the `<Accordion>`, render category sections as simple anchored blocks, scroll into view on mount when `category` param matches.
-- `src/components/landing/RoomCategory.tsx` — becomes a flat `<section id={slug}>` with the category header band + list of `RoomCard`s. No accordion item.
-- `src/components/landing/RoomCard.tsx` — flat editorial card (image carousel hero + meta row + description + chips + CTA). No accordion item.
+**New**
+- Nothing structurally new; all listings live in one updated data file.
+
+**Rewritten**
+- `src/lib/rooms.ts` — replace `ROOM_CATEGORIES` with a flat `LISTINGS: Listing[]` array. Each Listing has `slug, name, type, capacity, bedrooms, beds, bathrooms, blurb, amenities[], images[]`. The 2BHK additionally carries `spaces: { name, amenities[] }[]` (Living, Kitchen, Dining, Bedroom 1, Bedroom 2, Bath 1, Bath 2) — kept in data even though we don't render sub-groups on the card, so we can surface them later without re-touching data.
+- `src/components/landing/RoomCard.tsx` → becomes the **ListingCard** (Airbnb shape): 4:3 carousel with dots, title + chevron, subtitle, meta line (guests · BR · BA), top-4 amenity chips with `+N more`, full-width "Call for rates" pill. No price.
+- `src/components/landing/RoomCategory.tsx` → **removed** (no categories anymore). Imports updated.
+- `src/routes/rooms.{-$category}.tsx` → renders the new header + grid of `ListingCard`s. Drops scroll-to-category effect. Keeps the optional param so existing `/rooms/standard` etc. URLs still 200 (just shows the same page).
 
 **Not touched**
-- `src/lib/rooms.ts` (data unchanged).
-- `src/components/landing/RoomsTeaser.tsx` (home teaser unchanged — already the color-block style you approved).
-- Navbar, Footer, Hero, Amenities, Gallery, About, Location.
-- `head()` metadata logic on the route — kept as-is.
+- `src/components/landing/RoomsTeaser.tsx` (homepage teaser stays as-is per your answer).
+- Navbar, Footer, Hero, About, Amenities, Gallery, Location.
+- `head()` SEO logic — kept, updated copy for the new 4-listing structure.
 
-## Implementation notes
+## Image asset wiring
 
-- shadcn `Carousel` (already installed) for the image gallery; render small white dot indicators absolute-bottom-center to match the prototype. Prev/next arrows shown on desktop hover only; mobile uses swipe.
-- Eyebrow text per room: `{categoryName} · Room {n} of {total}`. Family Apartment shows `Exclusive Unit` (single-unit case) per the prototype.
-- Price source: `category.startingPrice` shown on every card in that category (data doesn't track per-room price).
-- Chips: pull from `room.amenities`, show first 4, soft `bg-gray-50 border-gray-100` style from the prototype mapped to our `bg-muted border-border` tokens so it stays themed.
-- "Back to home" link kept at top.
-- Smooth scroll on category deep-link: `useEffect` reads param, does `document.getElementById(slug)?.scrollIntoView({behavior:'smooth', block:'start'})` after layout settles.
+When you upload, I'll:
+1. Drop the originals into `src/assets/rooms/<slug>/` (e.g. `ayra-2bhk/bedroom-1.jpg`).
+2. Upload each one through `lovable-assets` so the repo stays light and they're served from CDN.
+3. Reference them as `.asset.json` imports inside `src/lib/rooms.ts`.
+
+If any listing is short on photos, I'll fall back to the existing `gallery-*.jpg` placeholders for that listing only and flag which ones are missing.
 
 ## Tokens
 
-Colors map to existing tokens — no hard-coded teal/gray:
-- `text-teal-600` → `text-primary`
-- `bg-teal-600 hover:bg-teal-700` → `bg-primary hover:bg-primary-deep`
-- `text-gray-900` → `text-foreground`
-- `text-gray-500/600` → `text-muted-foreground`
-- `bg-gray-50 border-gray-100` → `bg-muted border-border`
-- `shadow-sm shadow-teal-100` → existing `shadow-soft`
-
-Fonts: existing project serif/sans pair (no Playfair/Inter import — Lovable's stack already has display+body wired).
+All semantic — `text-primary` (teal), `bg-primary hover:bg-primary-deep`, `bg-muted border-border` (chips), `shadow-soft`, existing serif/sans pair. No hard-coded colors.
 
 ## Out of scope
 
-- No filters, no search, no calendar, no booking flow.
-- No changes to home, navbar, footer, or room data.
+- No detail page per listing, no booking flow, no calendar, no filters/search, no favorites heart (just visual on the card if at all — happy to skip).
+- No homepage changes.
 - No new dependencies.
+
+## Next step
+
+Upload the 4 image folders here labeled by listing name, then I'll switch to build mode and wire everything up in one pass.
