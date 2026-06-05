@@ -5,6 +5,27 @@ import gallery1 from "@/assets/gallery-1.jpg";
 import gallery2 from "@/assets/gallery-2.jpg";
 import gallery3 from "@/assets/gallery-3.jpg";
 
+// Ayra 2BHK — real photos
+import bhkLiving from "@/assets/rooms/ayra-2bhk/01-living.avif.asset.json";
+import bhkBedroom1 from "@/assets/rooms/ayra-2bhk/02-bedroom-1.avif.asset.json";
+import bhkBedroom2 from "@/assets/rooms/ayra-2bhk/03-bedroom-2.avif.asset.json";
+import bhkDining from "@/assets/rooms/ayra-2bhk/04-dining-kitchen.avif.asset.json";
+import bhkKitchen from "@/assets/rooms/ayra-2bhk/05-kitchen-detail.avif.asset.json";
+import bhkBath1 from "@/assets/rooms/ayra-2bhk/06-bathroom-1.jpeg.asset.json";
+import bhkBath2 from "@/assets/rooms/ayra-2bhk/07-bathroom-2.jpeg.asset.json";
+import bhkExterior from "@/assets/rooms/ayra-2bhk/08-exterior.jpeg.asset.json";
+
+const ayra2bhkImages = [
+  bhkLiving.url,
+  bhkBedroom1.url,
+  bhkBedroom2.url,
+  bhkDining.url,
+  bhkKitchen.url,
+  bhkBath1.url,
+  bhkBath2.url,
+  bhkExterior.url,
+];
+
 // Kept for backwards-compat with RoomsTeaser links: /rooms/{-$category}
 export type CategorySlug = "standard" | "deluxe" | "family";
 
