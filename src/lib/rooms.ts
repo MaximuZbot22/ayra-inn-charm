@@ -5,93 +5,148 @@ import gallery1 from "@/assets/gallery-1.jpg";
 import gallery2 from "@/assets/gallery-2.jpg";
 import gallery3 from "@/assets/gallery-3.jpg";
 
+// Kept for backwards-compat with RoomsTeaser links: /rooms/{-$category}
 export type CategorySlug = "standard" | "deluxe" | "family";
 
-export type Room = {
-  id: string;
+export type ListingSpace = {
   name: string;
-  description: string;
   amenities: string[];
+};
+
+export type Listing = {
+  slug: string;
+  name: string;
+  type: string; // e.g. "Entire rental unit in Kochi, India"
+  guests: number;
+  bedrooms: number | null;
+  beds: number;
+  bathrooms: string; // "2 baths" or "Shared bath"
+  blurb: string;
+  amenities: string[];
+  unavailable?: string[];
+  spaces?: ListingSpace[];
   images: string[];
 };
 
-export type RoomCategory = {
-  slug: CategorySlug;
-  name: string;
-  subtitle: string;
-  cover: string;
-  startingPrice: string;
-  blurb: string;
-  rooms: Room[];
-};
+// TEMP placeholders — swap in real photos from the Dropbox folders.
+const placeholderPool = [roomStandard, roomDeluxe, roomFamily, gallery1, gallery2, gallery3];
 
-const standardImgs = [roomStandard, gallery1, gallery2, gallery3];
-const deluxeImgs = [roomDeluxe, gallery2, gallery3, gallery1];
-const familyImgs = [roomFamily, gallery3, gallery1, gallery2];
-
-export const ROOM_CATEGORIES: RoomCategory[] = [
+export const LISTINGS: Listing[] = [
   {
-    slug: "standard",
-    name: "Standard Rooms",
-    subtitle: "Executive Room",
-    cover: roomStandard,
-    startingPrice: "₹1,200",
-    blurb: "Single bedroom with attached bathroom. Clean, quiet, and ready 24/7.",
-    rooms: Array.from({ length: 4 }, (_, i) => ({
-      id: `standard-${i + 1}`,
-      name: `Executive Room ${i + 1}`,
-      description:
-        "A comfortable single room with a queen bed, air conditioning, and a private attached bathroom. Ideal for short stays and solo travellers.",
-      amenities: ["Queen Bed", "Air Conditioning", "Free WiFi", "Attached Bathroom", "TV"],
-      images: standardImgs,
-    })),
-  },
-  {
-    slug: "deluxe",
-    name: "Deluxe Suites",
-    subtitle: "Executive Suite",
-    cover: roomDeluxe,
-    startingPrice: "₹1,800",
-    blurb: "Open-plan suite with a separate sitting area and bedroom space.",
-    rooms: Array.from({ length: 3 }, (_, i) => ({
-      id: `deluxe-${i + 1}`,
-      name: `Executive Suite ${i + 1}`,
-      description:
-        "Spacious open-plan suite with a comfortable sitting area, king-size bed, and premium linens. Great for longer stays or couples.",
-      amenities: ["King Bed", "Sitting Area", "Air Conditioning", "Free WiFi", "Work Desk", "Tea/Coffee"],
-      images: deluxeImgs,
-    })),
-  },
-  {
-    slug: "family",
-    name: "Family Apartment",
-    subtitle: "2BHK · Sleeps up to 7",
-    cover: roomFamily,
-    startingPrice: "₹3,500",
-    blurb: "Full 2BHK apartment with 2 bedrooms, a hall, and a kitchen. Perfect for families.",
-    rooms: [
-      {
-        id: "family-1",
-        name: "2BHK Apartment",
-        description:
-          "A complete 2-bedroom apartment with a spacious hall and full kitchen. Sleeps up to 7 guests comfortably — ideal for families or small groups travelling together.",
-        amenities: [
-          "2 Bedrooms",
-          "Living Hall",
-          "Full Kitchen",
-          "Sleeps 7",
-          "Air Conditioning",
-          "Free WiFi",
-          "2 Bathrooms",
-        ],
-        images: familyImgs,
-      },
+    slug: "ayra-2bhk",
+    name: "Ayra 2BHK",
+    type: "Entire rental unit in Kochi, India",
+    guests: 5,
+    bedrooms: 2,
+    beds: 2,
+    bathrooms: "2 baths",
+    blurb:
+      "A full 2-bedroom apartment with a spacious living room, dining area, and complete kitchen. Sleeps 5 — ideal for families or small groups travelling together.",
+    amenities: [
+      "Wifi",
+      "Air conditioning",
+      "Full kitchen",
+      "TV",
+      "Washing machine",
+      "Free parking",
+      "Hot water",
     ],
+    spaces: [
+      { name: "Living room", amenities: ["TV"] },
+      { name: "Full kitchen", amenities: ["Crockery and cutlery", "Coffee", "Freezer"] },
+      { name: "Dining area", amenities: ["Dining table"] },
+      {
+        name: "Bedroom 1",
+        amenities: [
+          "Queen bed",
+          "Air conditioning",
+          "Bed linen",
+          "Clothes storage",
+          "Hangers",
+          "TV",
+          "Room-darkening blinds",
+        ],
+      },
+      {
+        name: "Bedroom 2",
+        amenities: [
+          "Queen bed",
+          "Air conditioning",
+          "Bed linen",
+          "Clothes storage",
+          "Hangers",
+          "Room-darkening blinds",
+        ],
+      },
+      { name: "Full bathroom 1", amenities: ["Body soap", "Hot water", "Shampoo"] },
+      { name: "Full bathroom 2", amenities: ["Body soap", "Hot water", "Shampoo"] },
+    ],
+    images: [roomFamily, gallery1, gallery2, gallery3, roomStandard, roomDeluxe],
+  },
+  {
+    slug: "ayra-deluxe",
+    name: "Ayra Deluxe",
+    type: "Entire rental unit in Kochi, India",
+    guests: 2,
+    bedrooms: 1,
+    beds: 1,
+    bathrooms: "1 bath",
+    blurb:
+      "Relax in this comfortable private room featuring a queen-size bed, air conditioning, and an attached bathroom. Ideal for solo travellers or couples seeking a clean, peaceful, and convenient stay.",
+    amenities: [
+      "Wifi",
+      "Dedicated workspace",
+      "TV",
+      "Washing machine",
+      "Air conditioning",
+      "Exterior security cameras on property",
+    ],
+    unavailable: ["Carbon monoxide alarm", "Smoke alarm"],
+    images: [roomDeluxe, gallery2, gallery3, gallery1],
+  },
+  {
+    slug: "ayra-studio",
+    name: "Ayra Studio",
+    type: "Room in Kochi, India · Shared bathroom",
+    guests: 2,
+    bedrooms: null,
+    beds: 1,
+    bathrooms: "Shared bath",
+    blurb:
+      "A comfortable, modern studio room with a cozy bed, air conditioning, high-speed Wi-Fi, Smart TV, and a dedicated workspace. Perfect for business travellers, couples, and solo guests looking for a clean, peaceful stay.",
+    amenities: [
+      "Wifi",
+      "Dedicated workspace",
+      "Free parking on premises",
+      "TV",
+      "Washing machine",
+      "Air conditioning",
+      "Exterior security cameras on property",
+    ],
+    unavailable: ["Carbon monoxide alarm", "Smoke alarm"],
+    images: [roomStandard, gallery1, gallery3, gallery2],
+  },
+  {
+    slug: "ayra-deluxe-ii",
+    name: "Ayra Deluxe II",
+    type: "Entire rental unit in Kochi, India",
+    guests: 2,
+    bedrooms: 1,
+    beds: 1,
+    bathrooms: "1 bath",
+    blurb:
+      "Relax in this comfortable private room featuring a queen-size bed, air conditioning, and an attached bathroom. Ideal for solo travellers or couples seeking a clean, peaceful, and convenient stay.",
+    amenities: [
+      "Wifi",
+      "Dedicated workspace",
+      "TV",
+      "Washing machine",
+      "Air conditioning",
+      "Exterior security cameras on property",
+    ],
+    unavailable: ["Carbon monoxide alarm", "Smoke alarm"],
+    images: [roomDeluxe, gallery3, gallery2, gallery1],
   },
 ];
 
-export const CATEGORY_SLUGS: CategorySlug[] = ["standard", "deluxe", "family"];
-
-export function getCategory(slug: string | undefined): RoomCategory | undefined {
-  return ROOM_CATEGORIES.find((c) => c.slug === slug);
-}
+void placeholderPool;
