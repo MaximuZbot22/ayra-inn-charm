@@ -102,7 +102,7 @@ export const LISTINGS: Listing[] = [
       { name: "Full bathroom 1", amenities: ["Body soap", "Hot water", "Shampoo"] },
       { name: "Full bathroom 2", amenities: ["Body soap", "Hot water", "Shampoo"] },
     ],
-    images: [roomFamily, gallery1, gallery2, gallery3, roomStandard, roomDeluxe],
+    images: ayra2bhkImages,
   },
   {
     slug: "ayra-deluxe",
