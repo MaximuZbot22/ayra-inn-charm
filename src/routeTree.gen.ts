@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RoomsChar123CategoryChar125RouteImport } from './routes/rooms.{-$category}'
+import { Route as RoomsSlugRouteImport } from './routes/rooms.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -23,30 +24,39 @@ const RoomsChar123CategoryChar125Route =
     path: '/rooms/{-$category}',
     getParentRoute: () => rootRouteImport,
   } as any)
+const RoomsSlugRoute = RoomsSlugRouteImport.update({
+  id: '/rooms/$slug',
+  path: '/rooms/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/rooms/$slug': typeof RoomsSlugRoute
   '/rooms/{-$category}': typeof RoomsChar123CategoryChar125Route
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/rooms/$slug': typeof RoomsSlugRoute
   '/rooms/{-$category}': typeof RoomsChar123CategoryChar125Route
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/rooms/$slug': typeof RoomsSlugRoute
   '/rooms/{-$category}': typeof RoomsChar123CategoryChar125Route
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/rooms/{-$category}'
+  fullPaths: '/' | '/rooms/$slug' | '/rooms/{-$category}'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/rooms/{-$category}'
-  id: '__root__' | '/' | '/rooms/{-$category}'
+  to: '/' | '/rooms/$slug' | '/rooms/{-$category}'
+  id: '__root__' | '/' | '/rooms/$slug' | '/rooms/{-$category}'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  RoomsSlugRoute: typeof RoomsSlugRoute
   RoomsChar123CategoryChar125Route: typeof RoomsChar123CategoryChar125Route
 }
 
@@ -66,23 +76,21 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RoomsChar123CategoryChar125RouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/rooms/$slug': {
+      id: '/rooms/$slug'
+      path: '/rooms/$slug'
+      fullPath: '/rooms/$slug'
+      preLoaderRoute: typeof RoomsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  RoomsSlugRoute: RoomsSlugRoute,
   RoomsChar123CategoryChar125Route: RoomsChar123CategoryChar125Route,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

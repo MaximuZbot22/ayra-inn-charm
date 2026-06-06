@@ -1,4 +1,4 @@
-import { Phone } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
   Carousel,
@@ -8,8 +8,7 @@ import {
   CarouselPrevious,
   type CarouselApi,
 } from "@/components/ui/carousel";
-import { SITE } from "@/lib/site";
-import type { Listing } from "@/lib/rooms";
+import { allImages, type Listing } from "@/lib/rooms";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -26,6 +25,8 @@ export function ListingCard({ listing, index }: Props) {
     setCurrent(api.selectedScrollSnap());
     api.on("select", () => setCurrent(api.selectedScrollSnap()));
   }, [api]);
+
+  const images = allImages(listing);
 
   const metaBits: string[] = [
     `${listing.guests} guest${listing.guests === 1 ? "" : "s"}`,
@@ -44,14 +45,20 @@ export function ListingCard({ listing, index }: Props) {
       <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-muted shadow-soft">
         <Carousel setApi={setApi} className="h-full w-full">
           <CarouselContent className="h-full">
-            {listing.images.map((src, i) => (
+            {images.map((src, i) => (
               <CarouselItem key={i} className="h-full">
-                <img
-                  src={src}
-                  alt={`${listing.name} photo ${i + 1}`}
-                  loading={index === 0 && i === 0 ? "eager" : "lazy"}
-                  className="h-full w-full object-cover aspect-[4/3] transition-transform duration-700 group-hover:scale-[1.03]"
-                />
+                <Link
+                  to="/rooms/$slug"
+                  params={{ slug: listing.slug }}
+                  className="block h-full w-full"
+                >
+                  <img
+                    src={src}
+                    alt={`${listing.name} photo ${i + 1}`}
+                    loading={index === 0 && i === 0 ? "eager" : "lazy"}
+                    className="h-full w-full object-cover aspect-[4/3] transition-transform duration-700 group-hover:scale-[1.03]"
+                  />
+                </Link>
               </CarouselItem>
             ))}
           </CarouselContent>
@@ -60,7 +67,7 @@ export function ListingCard({ listing, index }: Props) {
         </Carousel>
 
         <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 pointer-events-none">
-          {listing.images.map((_, i) => (
+          {images.map((_, i) => (
             <span
               key={i}
               className={cn(
@@ -72,9 +79,13 @@ export function ListingCard({ listing, index }: Props) {
         </div>
       </div>
 
-      <div className="pt-4 flex flex-col flex-1">
+      <Link
+        to="/rooms/$slug"
+        params={{ slug: listing.slug }}
+        className="pt-4 flex flex-col flex-1"
+      >
         <div className="flex items-start justify-between gap-3">
-          <h3 className="font-display text-xl font-medium text-foreground leading-snug">
+          <h3 className="font-display text-xl font-medium text-foreground leading-snug group-hover:text-primary transition-colors">
             {listing.name}
           </h3>
         </div>
@@ -101,13 +112,10 @@ export function ListingCard({ listing, index }: Props) {
           )}
         </div>
 
-        <a
-          href={SITE.phoneHref}
-          className="mt-5 inline-flex w-full items-center justify-center gap-2 px-6 py-3 bg-primary hover:bg-primary-deep text-primary-foreground font-medium rounded-full transition-all shadow-soft"
-        >
-          <Phone size={14} /> Call for rates
-        </a>
-      </div>
+        <span className="mt-5 inline-flex w-full items-center justify-center gap-2 px-6 py-3 bg-primary hover:bg-primary-deep text-primary-foreground font-medium rounded-full transition-all shadow-soft">
+          View details
+        </span>
+      </Link>
     </article>
   );
 }
