@@ -1,10 +1,13 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, BedSingle, Users, Sparkles, type LucideIcon } from "lucide-react";
+import { Reveal } from "./Reveal";
 import { cn } from "@/lib/utils";
+
+type ListingSlug = "ayra-deluxe" | "ayra-2bhk" | "ayra-deluxe-ii";
 
 type TeaserItem = {
   key: string;
-  listingSlug: "ayra-deluxe" | "ayra-2bhk" | "ayra-deluxe-ii";
+  listingSlug: ListingSlug;
   title: string;
   description: string;
   Icon: LucideIcon;
@@ -13,7 +16,8 @@ type TeaserItem = {
 
 const ITEMS: TeaserItem[] = [
   {
-    slug: "standard",
+    key: "standard",
+    listingSlug: "ayra-deluxe",
     title: "Standard",
     description:
       "Clean, comfortable single rooms with attached bathroom. Ideal for short stays and solo travellers.",
@@ -21,7 +25,8 @@ const ITEMS: TeaserItem[] = [
     tone: "mid",
   },
   {
-    slug: "family",
+    key: "family",
+    listingSlug: "ayra-2bhk",
     title: "Family",
     description:
       "Full 2BHK apartment with 2 bedrooms, a hall, and a kitchen. Sleeps up to 7 — perfect for families.",
@@ -29,7 +34,8 @@ const ITEMS: TeaserItem[] = [
     tone: "deep",
   },
   {
-    slug: "deluxe",
+    key: "deluxe",
+    listingSlug: "ayra-deluxe-ii",
     title: "Executive Suites",
     description:
       "Spacious open-plan suite with a sitting area and king bed. Great for longer or premium stays.",
@@ -57,8 +63,8 @@ export function RoomsTeaser() {
               Pick the room that suits your stay.
             </h2>
             <p className="mt-4 text-muted-foreground text-balance">
-              Three styles to choose from — tap a card to explore every room in
-              that category. Reception is open 24/7.
+              Three styles to choose from — tap a card to explore the stay.
+              Reception is open 24/7.
             </p>
           </div>
         </Reveal>
@@ -66,7 +72,7 @@ export function RoomsTeaser() {
         <Reveal delay={0.1}>
           <div className="mt-12 overflow-hidden rounded-2xl shadow-soft grid grid-cols-1 md:grid-cols-3">
             {ITEMS.map((item) => (
-              <TeaserCard key={item.slug} item={item} />
+              <TeaserCard key={item.key} item={item} />
             ))}
           </div>
         </Reveal>
@@ -79,8 +85,8 @@ function TeaserCard({ item }: { item: TeaserItem }) {
   const { Icon } = item;
   return (
     <Link
-      to="/rooms/{-$category}"
-      params={{ category: item.slug }}
+      to="/rooms/$slug"
+      params={{ slug: item.listingSlug }}
       className={cn(
         "group relative flex flex-col p-7 sm:p-10 min-h-[340px] md:min-h-[420px] text-white transition-colors",
         TONE_BG[item.tone],
