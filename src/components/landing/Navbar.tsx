@@ -31,7 +31,14 @@ export function Navbar() {
       >
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
           <a href="#home" className="flex items-center gap-2.5">
-            <img src={logo} alt="Ayra Inn" className="h-9 w-9 object-contain" />
+            <span
+              className={cn(
+                "flex h-10 w-10 items-center justify-center rounded-full transition-colors",
+                scrolled ? "bg-transparent" : "bg-white/90 shadow-sm",
+              )}
+            >
+              <img src={logo} alt="Ayra Inn" className="h-8 w-8 object-contain" />
+            </span>
             <span
               className={cn(
                 "font-display text-xl font-semibold tracking-wide transition-colors",
