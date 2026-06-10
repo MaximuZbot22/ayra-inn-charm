@@ -1,5 +1,6 @@
 import { Instagram, Facebook, MapPin, Phone } from "lucide-react";
-import logo from "@/assets/ayra-inn-logo.png";
+import logoAsset from "@/assets/ayra-inn-logo.png.asset.json";
+const logo = logoAsset.url;
 import { NAV_LINKS, SITE } from "@/lib/site";
 
 export function Footer() {
