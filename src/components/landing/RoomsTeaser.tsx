@@ -1,11 +1,10 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, BedSingle, Users, Sparkles, type LucideIcon } from "lucide-react";
-import { Reveal } from "./Reveal";
-import type { CategorySlug } from "@/lib/rooms";
 import { cn } from "@/lib/utils";
 
 type TeaserItem = {
-  slug: CategorySlug;
+  key: string;
+  listingSlug: "ayra-deluxe" | "ayra-2bhk" | "ayra-deluxe-ii";
   title: string;
   description: string;
   Icon: LucideIcon;
