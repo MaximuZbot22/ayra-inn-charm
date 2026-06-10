@@ -55,14 +55,14 @@ export function PhotoTour({ listing, open, onClose, initialCategory }: Props) {
         </div>
       </div>
 
-      <div ref={scrollRef} className="h-[calc(100vh-4rem)] overflow-y-auto">
+      <div ref={scrollRef} className="h-[calc(100vh-4rem)] overflow-y-auto no-scrollbar">
         <div className="mx-auto max-w-5xl px-4 sm:px-8 py-8 sm:py-12">
           <h2 className="font-display text-2xl sm:text-3xl text-foreground mb-6">
             Photo tour
           </h2>
 
           {/* Category nav strip */}
-          <div className="flex gap-5 overflow-x-auto pb-6 mb-8 border-b border-border -mx-1 px-1">
+          <div className="flex gap-5 overflow-x-auto no-scrollbar pb-6 mb-8 border-b border-border -mx-1 px-1">
             {listing.photoTour.map((cat) => (
               <button
                 key={cat.name}

@@ -30,11 +30,18 @@ export const Route = createFileRoute("/rooms/$slug")({
     };
   },
   notFoundComponent: () => (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="text-center">
-        <p className="font-display text-2xl text-foreground">Listing not found</p>
-        <Link to="/rooms/{-$category}" params={{ category: undefined }} className="text-primary mt-4 inline-block">
-          ← Back to all stays
+    <div className="min-h-screen flex items-center justify-center bg-background px-6">
+      <div className="text-center max-w-md">
+        <p className="font-display text-3xl text-foreground">We couldn't find that stay</p>
+        <p className="text-sm text-muted-foreground mt-2">
+          The link may be out of date. Browse all our stays below.
+        </p>
+        <Link
+          to="/rooms/{-$category}"
+          params={{ category: undefined }}
+          className="mt-6 inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary-deep transition-colors"
+        >
+          View all stays
         </Link>
       </div>
     </div>

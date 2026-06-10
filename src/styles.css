@@ -121,3 +121,9 @@
   50% { transform: translateY(6px); }
 }
 .bounce-soft { animation: bounce-soft 2s ease-in-out infinite; }
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar { display: none; }
+}
