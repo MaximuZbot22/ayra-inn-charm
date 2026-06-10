@@ -1,8 +1,17 @@
-import g1 from "@/assets/gallery-1.jpg";
-import g2 from "@/assets/gallery-2.jpg";
-import g3 from "@/assets/gallery-3.jpg";
-import roomDeluxe from "@/assets/room-deluxe.jpg";
 import { Reveal } from "./Reveal";
+import { findListing } from "@/lib/rooms";
+
+const bhk = findListing("ayra-2bhk")!;
+const deluxe = findListing("ayra-deluxe")!;
+const studio = findListing("ayra-studio")!;
+
+// Featured shots pulled from real listing photo tours
+const featured = bhk.photoTour.find((c) => c.name === "Living room")?.images[0] ?? bhk.photoTour[0].images[0];
+const bedroomDeluxe = deluxe.photoTour[0].images[0];
+const studioLiving = studio.photoTour[0].images[0];
+const exterior =
+  bhk.photoTour.find((c) => c.name === "Exterior")?.images[0] ??
+  bhk.photoTour[bhk.photoTour.length - 1].images[0];
 
 export function Gallery() {
   return (
@@ -22,16 +31,16 @@ export function Gallery() {
         <Reveal delay={0.1}>
           <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 [&>div]:overflow-hidden [&>div]:rounded-2xl [&>div]:bg-secondary">
             <div className="col-span-2 row-span-2 aspect-square md:aspect-auto">
-              <img src={g1} alt="Reception" loading="lazy" className="h-full w-full object-cover hover:scale-105 transition duration-700" />
+              <img src={featured} alt="Ayra 2BHK living room" loading="lazy" className="h-full w-full object-cover hover:scale-105 transition duration-700" />
             </div>
             <div className="aspect-square">
-              <img src={g2} alt="Bathroom detail" loading="lazy" className="h-full w-full object-cover hover:scale-105 transition duration-700" />
+              <img src={bedroomDeluxe} alt="Ayra Deluxe bedroom" loading="lazy" className="h-full w-full object-cover hover:scale-105 transition duration-700" />
             </div>
             <div className="aspect-square">
-              <img src={g3} alt="Breakfast corner" loading="lazy" className="h-full w-full object-cover hover:scale-105 transition duration-700" />
+              <img src={studioLiving} alt="Ayra Studio living area" loading="lazy" className="h-full w-full object-cover hover:scale-105 transition duration-700" />
             </div>
             <div className="col-span-2 aspect-[2/1]">
-              <img src={roomDeluxe} alt="Deluxe room" loading="lazy" className="h-full w-full object-cover hover:scale-105 transition duration-700" />
+              <img src={exterior} alt="Ayra Inn exterior" loading="lazy" className="h-full w-full object-cover hover:scale-105 transition duration-700" />
             </div>
           </div>
         </Reveal>

@@ -90,7 +90,14 @@ export function Navbar() {
             )}
           >
             <a href="#home" className="flex items-center gap-2">
-              <img src={logo} alt="Ayra Inn" className="h-7 w-7 object-contain" />
+              <span
+                className={cn(
+                  "flex h-8 w-8 items-center justify-center rounded-full transition-colors",
+                  scrolled ? "bg-transparent" : "bg-white/90",
+                )}
+              >
+                <img src={logo} alt="Ayra Inn" className="h-6 w-6 object-contain" />
+              </span>
               <span
                 className={cn(
                   "font-display text-base font-semibold tracking-wide",
