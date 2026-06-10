@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Phone, MapPin, ArrowUpRight, Instagram, Facebook } from "lucide-react";
-import logo from "@/assets/ayra-inn-logo.png";
+import logoAsset from "@/assets/ayra-inn-logo.png.asset.json";
+const logo = logoAsset.url;
 import { NAV_LINKS, SITE } from "@/lib/site";
 
 type Props = { open: boolean; onClose: () => void };

@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import logo from "@/assets/ayra-inn-logo.png";
+import logoAsset from "@/assets/ayra-inn-logo.png.asset.json";
+const logo = logoAsset.url;
 import { NAV_LINKS, SITE } from "@/lib/site";
 import { MobileMenu } from "./MobileMenu";
 import { cn } from "@/lib/utils";
@@ -30,7 +31,14 @@ export function Navbar() {
       >
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
           <a href="#home" className="flex items-center gap-2.5">
-            <img src={logo} alt="Ayra Inn" className="h-9 w-9 object-contain" />
+            <span
+              className={cn(
+                "flex h-10 w-10 items-center justify-center rounded-full transition-colors",
+                scrolled ? "bg-transparent" : "bg-white/90 shadow-sm",
+              )}
+            >
+              <img src={logo} alt="Ayra Inn" className="h-8 w-8 object-contain" />
+            </span>
             <span
               className={cn(
                 "font-display text-xl font-semibold tracking-wide transition-colors",
@@ -82,7 +90,14 @@ export function Navbar() {
             )}
           >
             <a href="#home" className="flex items-center gap-2">
-              <img src={logo} alt="Ayra Inn" className="h-7 w-7 object-contain" />
+              <span
+                className={cn(
+                  "flex h-8 w-8 items-center justify-center rounded-full transition-colors",
+                  scrolled ? "bg-transparent" : "bg-white/90",
+                )}
+              >
+                <img src={logo} alt="Ayra Inn" className="h-6 w-6 object-contain" />
+              </span>
               <span
                 className={cn(
                   "font-display text-base font-semibold tracking-wide",

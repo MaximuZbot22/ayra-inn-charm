@@ -6,19 +6,19 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="relative isolate flex min-h-[92svh] sm:min-h-[100svh] w-full flex-col justify-end overflow-hidden"
+      className="relative isolate flex min-h-[88svh] sm:min-h-[100svh] w-full flex-col justify-end overflow-hidden"
     >
       <img
         src={hero}
         alt="Ayra Inn — warm exterior at golden hour"
         width={1920}
         height={1280}
-        className="absolute inset-0 -z-10 h-full w-full object-cover"
+        className="absolute inset-0 -z-10 h-full w-full object-cover object-[60%_center] sm:object-center"
       />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-black/55 via-black/30 to-black/80" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-black/65 via-black/45 to-black/85 sm:from-black/55 sm:via-black/30 sm:to-black/80" />
       <div className="absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-b from-transparent to-background" />
 
-      <div className="mx-auto w-full max-w-6xl px-6 pb-24 sm:pb-32 pt-28 sm:pt-40">
+      <div className="mx-auto w-full max-w-6xl px-6 pb-20 sm:pb-32 pt-24 sm:pt-40">
         {/* Status chip */}
         <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-md border border-white/15">
           <span className="relative flex h-2 w-2">
@@ -28,7 +28,7 @@ export function Hero() {
           Open now · 24/7
         </div>
 
-        <h1 className="mt-5 max-w-3xl font-display text-[2.75rem] leading-[1.02] sm:text-6xl md:text-7xl font-semibold text-white text-balance">
+        <h1 className="mt-4 sm:mt-5 max-w-3xl font-display text-[2.5rem] leading-[1.05] sm:text-6xl md:text-7xl font-semibold text-white text-balance">
           Comfortable Rooms.
           <br />
           <span className="italic font-medium text-[color:var(--gold-soft)]">
