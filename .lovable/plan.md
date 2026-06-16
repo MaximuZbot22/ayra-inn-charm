@@ -1,53 +1,52 @@
-## 1. New logo
-- Upload the attached `aryA LOH@2x.png` via `lovable-assets` to `src/assets/ayra-inn-logo.png.asset.json` (replace the current bundled logo import).
-- Update `src/components/landing/Navbar.tsx` to import the new asset pointer and use `.url`. The dark-green mark reads well on the white scrolled state; on the transparent hero state, wrap it in a subtle white circle (`bg-white/90 rounded-full p-1`) so it stays visible over the photo.
-- Replace `public/favicon.ico` reference in `__root.tsx` head with the new logo URL (PNG favicon link) so the browser tab matches.
+## Goal
+Make this project deploy on Netlify with zero manual fixes, preserving its TanStack Start SSR features (server functions, route loaders, head metadata).
 
-## 2. Gallery — reuse real room photos
-- Rewrite `src/components/landing/Gallery.tsx` to pull from `LISTINGS` in `src/lib/rooms.ts` instead of the placeholder `gallery-1/2/3.jpg` + `room-deluxe.jpg`.
-- Pick 4 representative shots: 2BHK living (large tile), Deluxe bedroom, Studio living, 2BHK exterior — keep the same 2-col / 4-col bento layout and hover zoom.
-- Delete the now-unused asset pointers: `src/assets/gallery-1.jpg.asset.json`, `gallery-2.jpg.asset.json`, `gallery-3.jpg.asset.json`, `room-deluxe.jpg.asset.json`, `room-family.jpg.asset.json`, `room-standard.jpg.asset.json` (via `assets--delete_asset`) — only after confirming no other file imports them.
+## Current state (what would break on Netlify)
+- This is **not** a plain Vite SPA. It's **TanStack Start (SSR)** built via Nitro through `@lovable.dev/vite-tanstack-config`, with `src/server.ts` as the server entry.
+- `vite.config.ts` currently doesn't set a Nitro `preset`, so the default target is **Cloudflare Workers** — the build emits a Worker bundle, not a Netlify-compatible output. Deploying that to Netlify would 404 every route (no SSR handler, no SPA fallback).
+- There is no `netlify.toml`, no `_redirects`, and no Netlify Functions entry.
+- A naive "set publish dir to `dist`" SPA approach would break SSR, server functions (`createServerFn`), and route `head()` metadata.
 
-## 3. Mobile hero polish
-In `src/components/landing/Hero.tsx`:
-- Tighten vertical rhythm on mobile: reduce top padding (`pt-28` → `pt-24`), lower `min-h-[92svh]` to `min-h-[88svh]`, and move the headline closer to the status chip (`mt-5` → `mt-4` on mobile).
-- Strengthen the bottom gradient on mobile so the CTAs read cleanly (`from-black/65 via-black/40 to-black/85`).
-- Add a subtle `object-position: 60% center` on mobile so the building, not sky, anchors the frame.
-- Make the status chip + headline group `space-y-3` so the gap feels intentional rather than an empty band.
-- Consider swapping the hero image — out of scope unless user provides one; the gradient/position tweaks above are the fix for now.
+## Approach
+Switch the Nitro build preset to **`netlify`**. Nitro's Netlify preset produces the exact layout Netlify expects:
+- Static assets in `dist/public/`
+- An SSR handler deployed as a Netlify Function with a catch-all redirect auto-written to `dist/public/_redirects`
 
-## 4. Fix "Listing not found" from RoomsTeaser
-**Root cause:** `RoomsTeaser` links to `/rooms/standard` (etc.) using the old `CategorySlug`. The dynamic route `/rooms/$slug` matches first, calls `findListing("standard")`, finds nothing, and throws `notFound()` → renders the error component.
+Then add a `netlify.toml` so Netlify picks the right build command and publish directory automatically, and add Node version pinning.
 
-Fix in `src/components/landing/RoomsTeaser.tsx`:
-- Repoint each teaser card to a real listing slug:
-  - Standard → `ayra-deluxe`
-  - Family → `ayra-2bhk`
-  - Executive Suites → `ayra-deluxe-ii`
-- Change `<Link to="/rooms/{-$category}" params={{ category: item.slug }}>` to `<Link to="/rooms/$slug" params={{ slug: item.listingSlug }}>`.
-- Drop the `CategorySlug` import (no longer referenced).
+## Changes
 
-Also polish the `notFoundComponent` in `src/routes/rooms.$slug.tsx`: replace "Back to all stays" (typo'd as "states" by the user) with a clearer message and a primary button styled to match the site, so even if a bad slug is hit it doesn't look broken.
+1. **`vite.config.ts`** — pass `nitro: { preset: "netlify" }` to `defineConfig` so the build targets Netlify Functions instead of Cloudflare Workers.
 
-## 5. Hide scrollbars in PhotoTour (mobile)
-In `src/components/landing/PhotoTour.tsx`:
-- Add a `.no-scrollbar` utility (or inline classes) on the vertical scroll container and the horizontal category strip:
-  - `scrollbar-width: none` (Firefox)
-  - `-ms-overflow-style: none` (legacy Edge)
-  - `&::-webkit-scrollbar { display: none }` (WebKit)
-- Apply to both the main `ref={scrollRef}` container and the category nav `overflow-x-auto` strip.
-- Add the utility class once in `src/styles.css` under a `@layer utilities` block so it's reusable.
+2. **`netlify.toml`** (new) — at project root:
+   ```toml
+   [build]
+     command = "bun run build"
+     publish = "dist/public"
 
-Touch scrolling continues to work; only the visible scrollbar disappears.
+   [build.environment]
+     NODE_VERSION = "20"
+   ```
+   No manual `[[redirects]]` block needed — Nitro's Netlify preset writes the SSR catch-all into `dist/public/_redirects` during build, which handles deep links and refreshes (no 404s).
 
-## Files touched
-- `src/assets/ayra-inn-logo.png.asset.json` (replaced via lovable-assets)
-- `src/components/landing/Navbar.tsx`
-- `src/components/landing/Gallery.tsx`
-- `src/components/landing/Hero.tsx`
-- `src/components/landing/RoomsTeaser.tsx`
-- `src/routes/rooms.$slug.tsx` (notFoundComponent polish)
-- `src/components/landing/PhotoTour.tsx`
-- `src/styles.css` (add `.no-scrollbar` utility)
-- `src/routes/__root.tsx` (favicon link)
-- Delete 6 unused gallery/room asset pointers
+3. **`.nvmrc`** (new) — `20` — guarantees the same Node version locally and on Netlify.
+
+4. **`package.json`** — add an explicit `"start": "node .output/server/index.mjs"` script is **not** needed for Netlify (the function is invoked by the platform); no dependency changes required. Nitro is already a devDependency.
+
+5. **`src/server.ts`** — unchanged. The Nitro Netlify preset wraps the same `export default { fetch }` handler used today, so the SSR error wrapper keeps working.
+
+## Build & deploy settings to enter in Netlify (also encoded in `netlify.toml`)
+- **Build command:** `bun run build`
+- **Publish directory:** `dist/public`
+- **Functions directory:** auto-detected (Nitro emits to `.netlify/functions-internal/`)
+- **Node version:** 20
+
+## Verification
+After the edits I'll run `bun run build` from a clean state and confirm:
+- `dist/public/` exists with hashed JS/CSS and `_redirects`
+- A Netlify function bundle is emitted under `.netlify/`
+- No build errors
+
+## Out of scope
+- No source/route refactors. Routing, components, and assets already use Vite-hashed paths and TanStack file routes — they are Netlify-safe once the preset is correct.
+- No switch to a pure SPA — that would regress SSR, server functions, and per-route social metadata.
