@@ -105,7 +105,7 @@ function RootComponent() {
   const { queryClient } = Route$3.useRouteContext();
   return /* @__PURE__ */ jsxRuntimeExports.jsx(QueryClientProvider, { client: queryClient, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Outlet, {}) });
 }
-const $$splitComponentImporter$2 = () => import("./index-BKtkmK8w.mjs");
+const $$splitComponentImporter$2 = () => import("./index-Ca2t1ApZ.mjs");
 const Route$2 = createFileRoute("/")({
   head: () => ({
     meta: [{
@@ -140,7 +140,7 @@ const Route$2 = createFileRoute("/")({
           addressRegion: "Kerala",
           addressCountry: "IN"
         },
-        telephone: "+919876543210"
+        telephone: "+919292007046"
       })
     }]
   }),
@@ -288,7 +288,7 @@ function coverImages(listing, count = 5) {
 function findListing(slug) {
   return LISTINGS.find((l) => l.slug === slug);
 }
-const $$splitComponentImporter$1 = () => import("./rooms._-_category_-LD5Y0-9b.mjs");
+const $$splitComponentImporter$1 = () => import("./rooms._-_category_-C240ev2X.mjs");
 const Route$1 = createFileRoute("/rooms/{-$category}")({
   head: () => {
     const title = "Our Stays — Ayra Inn";
@@ -310,7 +310,7 @@ const Route$1 = createFileRoute("/rooms/{-$category}")({
   },
   component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
-const $$splitComponentImporter = () => import("./rooms._slug-Bmy1A36R.mjs");
+const $$splitComponentImporter = () => import("./rooms._slug-B9_4S0ro.mjs");
 const $$splitNotFoundComponentImporter = () => import("./rooms._slug-CeF-KUbT.mjs");
 const Route = createFileRoute("/rooms/$slug")({
   beforeLoad: ({

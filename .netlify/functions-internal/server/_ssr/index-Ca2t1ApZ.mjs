@@ -1,7 +1,7 @@
 import { j as jsxRuntimeExports, r as reactExports } from "../_libs/react.mjs";
-import { N as Navbar, F as Footer, S as SITE, c as cn } from "./Footer-BrOn_01q.mjs";
-import { L as LISTINGS, f as findListing } from "./router-DbyI7hYT.mjs";
-import { L as ListingCard } from "./ListingCard-u-efMjb8.mjs";
+import { N as Navbar, F as Footer, S as SITE, c as cn } from "./Footer-C7l7_3zW.mjs";
+import { L as LISTINGS, f as findListing } from "./router-u3OyuEyp.mjs";
+import { L as ListingCard } from "./ListingCard-BB-7r1da.mjs";
 import { A as AnimatePresence, m as motion } from "../_libs/framer-motion.mjs";
 import { S as Star, P as Phone, C as ChevronDown, a as Clock, W as Wifi, b as Snowflake, c as Car, U as Users, d as Shirt, B as BellRing, e as UtensilsCrossed, M as MapPin, N as Navigation } from "../_libs/lucide-react.mjs";
 import "../_libs/clsx.mjs";
@@ -90,7 +90,7 @@ function Hero() {
     e.preventDefault();
     const cleanPhone = SITE.phone.replace(/[^0-9]/g, "");
     const text = encodeURIComponent(
-      `Hi Mohammed, I'd like to check availability at Ayra Inn for ${guests} guest${guests === 1 ? "" : "s"}` + (checkIn ? ` checking in on ${checkIn}` : "") + (checkOut ? ` checking out on ${checkOut}` : "") + ". Is there a room available?"
+      `Hi, I'd like to check availability at Ayra Inn for ${guests} guest${guests === 1 ? "" : "s"}` + (checkIn ? ` checking in on ${checkIn}` : "") + (checkOut ? ` checking out on ${checkOut}` : "") + ". Is there a room available?"
     );
     window.open(`https://wa.me/${cleanPhone}?text=${text}`, "_blank");
   };
@@ -131,7 +131,7 @@ function Hero() {
               /* @__PURE__ */ jsxRuntimeExports.jsx("br", { className: "md:hidden" }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "italic font-medium text-[color:var(--gold-soft)] block md:inline md:ml-3", children: "Your home in Kochi." })
             ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-3 text-xs sm:text-base text-white/80 leading-relaxed max-w-md hidden sm:block", children: "Clean, spacious 2BHK apartments, deluxe rooms, and studio stays in North Kalamassery. Coordinate directly with host Mohammed for a stress-free stay." }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-3 text-xs sm:text-base text-white/80 leading-relaxed max-w-md hidden sm:block", children: "Clean, spacious 2BHK apartments, deluxe rooms, and studio stays in North Kalamassery. Coordinate directly for a stress-free stay." }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-4 flex items-center gap-2 text-[10px] sm:text-sm text-white/70 border-t border-white/5 pt-3 hidden sm:flex", children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex text-[color:var(--gold-soft)]", children: Array.from({ length: 5 }).map((_, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(Star, { size: 12, fill: "currentColor", strokeWidth: 0 }, i)) }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Rated 4.7/5 by families & travellers" })
@@ -270,7 +270,7 @@ function Hero() {
                     const active = slides[currentSlide];
                     const cleanPhone = SITE.phone.replace(/[^0-9]/g, "");
                     const text = encodeURIComponent(
-                      `Hi Mohammed, I'd like to check availability at Ayra Inn for the ${active.title} (${active.subtitle}). Is it available?`
+                      `Hi, I'd like to check availability at Ayra Inn for the ${active.title} (${active.subtitle}). Is it available?`
                     );
                     window.open(`https://wa.me/${cleanPhone}?text=${text}`, "_blank");
                   },

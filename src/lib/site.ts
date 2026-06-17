@@ -1,7 +1,7 @@
 export const SITE = {
   name: "Ayra Inn",
-  phone: "+91 98765 43210",
-  phoneHref: "tel:+919876543210",
+  phone: "+91 92920 07046",
+  phoneHref: "tel:+919292007046",
   address: "M S Junction, Rockwell Nad Rd, Pradeeksha Nagar, North Kalamassery, Kalamassery, Kochi, Kerala 683503",
   directionsUrl:
     "https://www.google.com/maps/dir/?api=1&destination=AYRA+INN/@10.0560248,76.332641",

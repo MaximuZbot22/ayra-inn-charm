@@ -44,7 +44,7 @@ export const Route = createFileRoute("/")({
             addressRegion: "Kerala",
             addressCountry: "IN",
           },
-          telephone: "+919876543210",
+          telephone: "+919292007046",
         }),
       },
     ],

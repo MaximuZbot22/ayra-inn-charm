@@ -1,12 +1,12 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
-import { l as logo } from "./router-DbyI7hYT.mjs";
+import { l as logo } from "./router-u3OyuEyp.mjs";
 import { c as clsx } from "../_libs/clsx.mjs";
 import { t as twMerge } from "../_libs/tailwind-merge.mjs";
 import { A as AnimatePresence, m as motion } from "../_libs/framer-motion.mjs";
 import { X, f as Menu, I as Instagram, F as Facebook, P as Phone, M as MapPin, A as ArrowUpRight } from "../_libs/lucide-react.mjs";
 const SITE = {
-  phone: "+91 98765 43210",
-  phoneHref: "tel:+919876543210",
+  phone: "+91 92920 07046",
+  phoneHref: "tel:+919292007046",
   address: "M S Junction, Rockwell Nad Rd, Pradeeksha Nagar, North Kalamassery, Kalamassery, Kochi, Kerala 683503",
   directionsUrl: "https://www.google.com/maps/dir/?api=1&destination=AYRA+INN/@10.0560248,76.332641",
   mapEmbed: "https://www.google.com/maps?q=10.0560248,76.332641&z=17&output=embed"

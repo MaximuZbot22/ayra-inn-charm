@@ -68,7 +68,7 @@ export function Hero() {
     e.preventDefault();
     const cleanPhone = SITE.phone.replace(/[^0-9]/g, "");
     const text = encodeURIComponent(
-      `Hi Mohammed, I'd like to check availability at Ayra Inn for ${guests} guest${guests === 1 ? "" : "s"}` +
+      `Hi, I'd like to check availability at Ayra Inn for ${guests} guest${guests === 1 ? "" : "s"}` +
         (checkIn ? ` checking in on ${checkIn}` : "") +
         (checkOut ? ` checking out on ${checkOut}` : "") +
         ". Is there a room available?"
@@ -123,7 +123,7 @@ export function Hero() {
 
           {/* Description (desktop/tablet only to keep mobile clean) */}
           <p className="mt-3 text-xs sm:text-base text-white/80 leading-relaxed max-w-md hidden sm:block">
-            Clean, spacious 2BHK apartments, deluxe rooms, and studio stays in North Kalamassery. Coordinate directly with host Mohammed for a stress-free stay.
+            Clean, spacious 2BHK apartments, deluxe rooms, and studio stays in North Kalamassery. Coordinate directly for a stress-free stay.
           </p>
 
           {/* Trust bar (desktop/tablet only to save mobile vertical space) */}
@@ -282,7 +282,7 @@ export function Hero() {
                 const active = slides[currentSlide];
                 const cleanPhone = SITE.phone.replace(/[^0-9]/g, "");
                 const text = encodeURIComponent(
-                  `Hi Mohammed, I'd like to check availability at Ayra Inn for the ${active.title} (${active.subtitle}). Is it available?`
+                  `Hi, I'd like to check availability at Ayra Inn for the ${active.title} (${active.subtitle}). Is it available?`
                 );
                 window.open(`https://wa.me/${cleanPhone}?text=${text}`, "_blank");
               }}

@@ -143,7 +143,7 @@ function ListingDetail() {
                 <div>
                   <h3 className="font-display text-xl text-foreground font-semibold">Confirm rates & book</h3>
                   <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-                    Select your stay details to check availability and rates directly with host Mohammed via WhatsApp.
+                    Select your stay details to check availability and rates directly via WhatsApp.
                   </p>
                 </div>
 
@@ -193,10 +193,10 @@ function ListingDetail() {
                 <div className="pt-2">
                   <a
                     href={`https://wa.me/${SITE.phone.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(
-                      `Hi Mohammed, I'd like to book ${listing.name} for ${guests} guest${guests === 1 ? "" : "s"}` +
+                      `Hi, I'd like to book ${listing.name} for ${guests} guest${guests === 1 ? "" : "s"}` +
                         (checkIn ? ` checking in on ${checkIn}` : "") +
                         (checkOut ? ` checking out on ${checkOut}` : "") +
-                        ". Is it available?"
+                        ". Is there a room available?"
                     )}`}
                     target="_blank"
                     rel="noreferrer"

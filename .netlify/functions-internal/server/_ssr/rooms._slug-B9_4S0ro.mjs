@@ -1,7 +1,7 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
 import { L as Link } from "../_libs/tanstack__react-router.mjs";
-import { N as Navbar, S as SITE, F as Footer } from "./Footer-BrOn_01q.mjs";
-import { R as Route, f as findListing, c as coverImages } from "./router-DbyI7hYT.mjs";
+import { N as Navbar, S as SITE, F as Footer } from "./Footer-C7l7_3zW.mjs";
+import { R as Route, f as findListing, c as coverImages } from "./router-u3OyuEyp.mjs";
 import { g as ArrowLeft, i as Check, P as Phone, G as Grid3x3, X } from "../_libs/lucide-react.mjs";
 import "../_libs/tanstack__router-core.mjs";
 import "../_libs/tanstack__history.mjs";
@@ -214,7 +214,7 @@ function ListingDetail() {
         /* @__PURE__ */ jsxRuntimeExports.jsx("aside", { className: "lg:col-span-1", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "lg:sticky lg:top-24 rounded-2xl border border-border bg-card p-6 shadow-soft space-y-5", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-display text-xl text-foreground font-semibold", children: "Confirm rates & book" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-muted-foreground mt-1 leading-relaxed", children: "Select your stay details to check availability and rates directly with host Mohammed via WhatsApp." })
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-muted-foreground mt-1 leading-relaxed", children: "Select your stay details to check availability and rates directly via WhatsApp." })
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-3", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
@@ -237,7 +237,7 @@ function ListingDetail() {
             ] })
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "pt-2", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("a", { href: `https://wa.me/${SITE.phone.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(`Hi Mohammed, I'd like to book ${listing.name} for ${guests} guest${guests === 1 ? "" : "s"}` + (checkIn ? ` checking in on ${checkIn}` : "") + (checkOut ? ` checking out on ${checkOut}` : "") + ". Is it available?")}`, target: "_blank", rel: "noreferrer", className: "flex w-full items-center justify-center gap-2 px-6 py-3 bg-[color:oklch(0.60_0.15_145)] hover:bg-[color:oklch(0.50_0.15_145)] text-white font-semibold rounded-full transition-all shadow-soft text-sm", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("a", { href: `https://wa.me/${SITE.phone.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(`Hi, I'd like to book ${listing.name} for ${guests} guest${guests === 1 ? "" : "s"}` + (checkIn ? ` checking in on ${checkIn}` : "") + (checkOut ? ` checking out on ${checkOut}` : "") + ". Is there a room available?")}`, target: "_blank", rel: "noreferrer", className: "flex w-full items-center justify-center gap-2 px-6 py-3 bg-[color:oklch(0.60_0.15_145)] hover:bg-[color:oklch(0.50_0.15_145)] text-white font-semibold rounded-full transition-all shadow-soft text-sm", children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { className: "h-4 w-4 fill-current", viewBox: "0 0 24 24", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 0 0 1.333 4.982L2 22l5.233-1.371a9.994 9.994 0 0 0 4.779 1.21h.004c5.505 0 9.988-4.478 9.99-9.986 0-2.67-1.037-5.178-2.92-7.062C17.182 3.007 14.68 2 12.012 2zm5.728 14.111c-.314.88-1.545 1.62-2.122 1.744-.577.123-1.127.227-3.805-.884-2.883-1.2-4.683-4.119-4.827-4.31-.144-.191-1.165-1.548-1.165-2.953 0-1.405.736-2.096.997-2.37.262-.274.577-.341.77-.341.192 0 .385.001.55.009.174.008.406-.065.632.483.23.56.786 1.916.852 2.052.067.137.111.297.02.48-.09.182-.135.297-.27.457-.135.159-.283.356-.405.479-.136.137-.279.287-.12.56.159.273.708 1.168 1.517 1.89.103.091.205.182.308.272.784.693 1.393.9 1.723 1.036.33.136.522.091.714-.136.192-.227.825-.955 1.045-1.295.22-.34.44-.273.742-.159.303.114 1.926.909 2.256 1.074.33.165.55.244.632.386.083.143.083.824-.23 1.704z" }) }),
               "Book via WhatsApp"
             ] }),
