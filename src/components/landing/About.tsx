@@ -26,12 +26,12 @@ export function About() {
             <p className="mt-5 text-muted-foreground leading-relaxed">
               Ayra Inn offers clean and comfortable rooms for travellers,
               families, and short stays. Located in a convenient area with easy
-              access to transport, shops, and restaurants — and a friendly
-              reception team available around the clock.
+              access to transport, shops, and restaurants — with host support
+              available around the clock to coordinate your check-in.
             </p>
             <div className="mt-8 grid grid-cols-3 gap-4 max-w-md">
-              <Stat n="24/7" label="Reception" />
-              <Stat n="3" label="Room types" />
+              <Stat n="24/7" label="Support" />
+              <Stat n="4" label="Stays" />
               <Stat n="★ 4.7" label="Guest rating" />
             </div>
           </div>

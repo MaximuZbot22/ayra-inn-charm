@@ -9,11 +9,11 @@ import {
 import { Reveal } from "./Reveal";
 
 const items = [
-  { icon: Wifi, title: "Free WiFi", desc: "Fast in every room and the lobby." },
+  { icon: Wifi, title: "Free WiFi", desc: "Fast in every room and communal areas." },
   { icon: Car, title: "Free Parking", desc: "On-site parking for guests." },
   { icon: Snowflake, title: "Air Conditioning", desc: "Cool, quiet rooms all year." },
   { icon: Shirt, title: "Laundry Service", desc: "Same-day on request." },
-  { icon: BellRing, title: "24/7 Reception", desc: "Check in any time of day." },
+  { icon: BellRing, title: "24/7 Check-In", desc: "Coordinate check-in any time of day." },
   { icon: UtensilsCrossed, title: "Nearby Restaurants", desc: "Walk to local eateries." },
 ];
 

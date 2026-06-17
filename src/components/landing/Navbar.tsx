@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import logoAsset from "@/assets/ayra-inn-logo.png.asset.json";
-const logo = logoAsset.url;
+import logo from "@/assets/ayra-inn-logo.png";
 import { NAV_LINKS, SITE } from "@/lib/site";
 import { MobileMenu } from "./MobileMenu";
 import { cn } from "@/lib/utils";

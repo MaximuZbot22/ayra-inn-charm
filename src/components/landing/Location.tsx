@@ -42,7 +42,7 @@ export function Location() {
                     </a>
                   }
                 />
-                <Item icon={<Navigation size={18} />} label="Reception" value="Open 24 hours" />
+                <Item icon={<Navigation size={18} />} label="Check-In" value="Coordinated 24/7" />
               </div>
               <a
                 href={SITE.directionsUrl}

@@ -2,11 +2,11 @@ export const SITE = {
   name: "Ayra Inn",
   phone: "+91 98765 43210",
   phoneHref: "tel:+919876543210",
-  address: "Kochi, Kerala",
+  address: "M S Junction, Rockwell Nad Rd, Pradeeksha Nagar, North Kalamassery, Kalamassery, Kochi, Kerala 683503",
   directionsUrl:
-    "https://www.google.com/maps/dir/?api=1&destination=Kochi%2C+Kerala",
+    "https://www.google.com/maps/dir/?api=1&destination=AYRA+INN/@10.0560248,76.332641",
   mapEmbed:
-    "https://www.google.com/maps?q=Kochi%2C+Kerala&output=embed",
+    "https://www.google.com/maps?q=10.0560248,76.332641&z=17&output=embed",
 };
 
 export const NAV_LINKS = [

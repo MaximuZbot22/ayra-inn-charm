@@ -8,7 +8,7 @@ import { LISTINGS } from "@/lib/rooms";
 export const Route = createFileRoute("/rooms/{-$category}")({
   head: () => {
     const title = "Our Stays — Ayra Inn";
-    const description = `Browse all ${LISTINGS.length} stays at Ayra Inn, Kochi — a 2BHK apartment, two Deluxe units, and a Studio room. Reception open 24/7.`;
+    const description = `Browse all ${LISTINGS.length} stays at Ayra Inn, Kochi — a 2BHK apartment, two Deluxe units, and a Studio room. 24/7 check-in support.`;
     return {
       meta: [
         { title },
@@ -43,7 +43,7 @@ function RoomsPage() {
             </h1>
             <p className="text-muted-foreground mt-3 max-w-xl text-sm sm:text-base leading-relaxed">
               From a full 2BHK apartment to private deluxe rooms and a cozy
-              studio — pick what fits your stay. Call reception any time for
+              studio — pick what fits your stay. Contact our host team any time for
               rates and availability.
             </p>
           </div>

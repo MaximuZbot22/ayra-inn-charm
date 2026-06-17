@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Phone, MapPin, ArrowUpRight, Instagram, Facebook } from "lucide-react";
-import logoAsset from "@/assets/ayra-inn-logo.png.asset.json";
-const logo = logoAsset.url;
+import logo from "@/assets/ayra-inn-logo.png";
 import { NAV_LINKS, SITE } from "@/lib/site";
 
 type Props = { open: boolean; onClose: () => void };
@@ -105,7 +104,7 @@ export function MobileMenu({ open, onClose }: Props) {
                 </div>
                 <div className="flex-1">
                   <div className="text-lg font-semibold">{SITE.phone}</div>
-                  <div className="text-xs text-white/60">Tap to call · 24/7 reception</div>
+                  <div className="text-xs text-white/60">Tap to call · 24/7 check-in support</div>
                 </div>
                 <ArrowUpRight size={18} className="text-white/60" />
               </a>

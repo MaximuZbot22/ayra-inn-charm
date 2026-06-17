@@ -1,41 +1,3 @@
-// Ayra 2BHK
-import bhk01 from "@/assets/rooms/ayra-2bhk/01-living.avif.asset.json";
-import bhk02 from "@/assets/rooms/ayra-2bhk/02-bedroom-1.avif.asset.json";
-import bhk03 from "@/assets/rooms/ayra-2bhk/03-bedroom-2.avif.asset.json";
-import bhk04 from "@/assets/rooms/ayra-2bhk/04-dining-kitchen.avif.asset.json";
-import bhk05 from "@/assets/rooms/ayra-2bhk/05-kitchen-detail.avif.asset.json";
-import bhk06 from "@/assets/rooms/ayra-2bhk/06-bathroom-1.jpeg.asset.json";
-import bhk07 from "@/assets/rooms/ayra-2bhk/07-bathroom-2.jpeg.asset.json";
-import bhk08 from "@/assets/rooms/ayra-2bhk/08-exterior.jpeg.asset.json";
-
-// Ayra Deluxe
-import dlxBed1 from "@/assets/rooms/ayra-deluxe/bedroom-1.avif.asset.json";
-import dlxBed2 from "@/assets/rooms/ayra-deluxe/bedroom-2.avif.asset.json";
-import dlxBed3 from "@/assets/rooms/ayra-deluxe/bedroom-3.avif.asset.json";
-import dlxBath1 from "@/assets/rooms/ayra-deluxe/bathroom-1.avif.asset.json";
-import dlxBath2 from "@/assets/rooms/ayra-deluxe/bathroom-2.avif.asset.json";
-
-// Ayra Deluxe II
-import dlx2Bed1 from "@/assets/rooms/ayra-deluxe-ii/bedroom-1.avif.asset.json";
-import dlx2Bed2 from "@/assets/rooms/ayra-deluxe-ii/bedroom-2.avif.asset.json";
-import dlx2Bed3 from "@/assets/rooms/ayra-deluxe-ii/bedroom-3.avif.asset.json";
-import dlx2Bath1 from "@/assets/rooms/ayra-deluxe-ii/bathroom-1.avif.asset.json";
-import dlx2Bath2 from "@/assets/rooms/ayra-deluxe-ii/bathroom-2.avif.asset.json";
-
-// Ayra Studio
-import stdLiv1 from "@/assets/rooms/ayra-studio/living-1.jpeg.asset.json";
-import stdLiv2 from "@/assets/rooms/ayra-studio/living-2.jpeg.asset.json";
-import stdLiv3 from "@/assets/rooms/ayra-studio/living-3.avif.asset.json";
-import stdBed1 from "@/assets/rooms/ayra-studio/bedroom-1.jpeg.asset.json";
-import stdBed2 from "@/assets/rooms/ayra-studio/bedroom-2.avif.asset.json";
-import stdBed3 from "@/assets/rooms/ayra-studio/bedroom-3.avif.asset.json";
-import stdBed4 from "@/assets/rooms/ayra-studio/bedroom-4.avif.asset.json";
-import stdWork1 from "@/assets/rooms/ayra-studio/workspace-1.jpeg.asset.json";
-import stdWork2 from "@/assets/rooms/ayra-studio/workspace-2.jpeg.asset.json";
-import stdBath1 from "@/assets/rooms/ayra-studio/bathroom-1.jpeg.asset.json";
-import stdBath2 from "@/assets/rooms/ayra-studio/bathroom-2.jpeg.asset.json";
-import stdAdd1 from "@/assets/rooms/ayra-studio/additional-1.jpeg.asset.json";
-
 // Kept for backwards-compat with RoomsTeaser links: /rooms/{-$category}
 export type CategorySlug = "standard" | "deluxe" | "family";
 
@@ -112,11 +74,11 @@ export const LISTINGS: Listing[] = [
       { name: "Full bathroom 2", amenities: ["Body soap", "Hot water", "Shampoo"] },
     ],
     photoTour: [
-      { name: "Living room", images: [bhk01.url] },
-      { name: "Bedroom", images: [bhk02.url, bhk03.url] },
-      { name: "Kitchen & Dining", images: [bhk04.url, bhk05.url] },
-      { name: "Bathroom", images: [bhk06.url, bhk07.url] },
-      { name: "Exterior", images: [bhk08.url] },
+      { name: "Living room", images: ["/assets/rooms/ayra-2bhk/01-living.avif"] },
+      { name: "Bedroom", images: ["/assets/rooms/ayra-2bhk/02-bedroom-1.avif", "/assets/rooms/ayra-2bhk/03-bedroom-2.avif"] },
+      { name: "Kitchen & Dining", images: ["/assets/rooms/ayra-2bhk/04-dining-kitchen.avif", "/assets/rooms/ayra-2bhk/05-kitchen-detail.avif"] },
+      { name: "Bathroom", images: ["/assets/rooms/ayra-2bhk/06-bathroom-1.jpeg", "/assets/rooms/ayra-2bhk/07-bathroom-2.jpeg"] },
+      { name: "Exterior", images: ["/assets/rooms/ayra-2bhk/08-exterior.jpeg"] },
     ],
   },
   {
@@ -139,8 +101,8 @@ export const LISTINGS: Listing[] = [
     ],
     unavailable: ["Carbon monoxide alarm", "Smoke alarm"],
     photoTour: [
-      { name: "Bedroom", images: [dlxBed1.url, dlxBed2.url, dlxBed3.url] },
-      { name: "Bathroom", images: [dlxBath1.url, dlxBath2.url] },
+      { name: "Bedroom", images: ["/assets/rooms/ayra-deluxe/bedroom-1.avif", "/assets/rooms/ayra-deluxe/bedroom-2.avif", "/assets/rooms/ayra-deluxe/bedroom-3.avif"] },
+      { name: "Bathroom", images: ["/assets/rooms/ayra-deluxe/bathroom-1.avif", "/assets/rooms/ayra-deluxe/bathroom-2.avif"] },
     ],
   },
   {
@@ -164,11 +126,11 @@ export const LISTINGS: Listing[] = [
     ],
     unavailable: ["Carbon monoxide alarm", "Smoke alarm"],
     photoTour: [
-      { name: "Shared living room", images: [stdLiv1.url, stdLiv2.url, stdLiv3.url] },
-      { name: "Bedroom", images: [stdBed1.url, stdBed2.url, stdBed3.url, stdBed4.url] },
-      { name: "Shared workspace", images: [stdWork1.url, stdWork2.url] },
-      { name: "Full bathroom", images: [stdBath1.url, stdBath2.url] },
-      { name: "Additional photos", images: [stdAdd1.url] },
+      { name: "Shared living room", images: ["/assets/rooms/ayra-studio/living-1.jpeg", "/assets/rooms/ayra-studio/living-2.jpeg", "/assets/rooms/ayra-studio/living-3.avif"] },
+      { name: "Bedroom", images: ["/assets/rooms/ayra-studio/bedroom-1.jpeg", "/assets/rooms/ayra-studio/bedroom-2.avif", "/assets/rooms/ayra-studio/bedroom-3.avif", "/assets/rooms/ayra-studio/bedroom-4.avif"] },
+      { name: "Shared workspace", images: ["/assets/rooms/ayra-studio/workspace-1.jpeg", "/assets/rooms/ayra-studio/workspace-2.jpeg"] },
+      { name: "Full bathroom", images: ["/assets/rooms/ayra-studio/bathroom-1.jpeg", "/assets/rooms/ayra-studio/bathroom-2.jpeg"] },
+      { name: "Additional photos", images: ["/assets/rooms/ayra-studio/additional-1.jpeg"] },
     ],
   },
   {
@@ -191,8 +153,8 @@ export const LISTINGS: Listing[] = [
     ],
     unavailable: ["Carbon monoxide alarm", "Smoke alarm"],
     photoTour: [
-      { name: "Bedroom", images: [dlx2Bed1.url, dlx2Bed2.url, dlx2Bed3.url] },
-      { name: "Bathroom", images: [dlx2Bath1.url, dlx2Bath2.url] },
+      { name: "Bedroom", images: ["/assets/rooms/ayra-deluxe-ii/bedroom-1.avif", "/assets/rooms/ayra-deluxe-ii/bedroom-2.avif", "/assets/rooms/ayra-deluxe-ii/bedroom-3.avif"] },
+      { name: "Bathroom", images: ["/assets/rooms/ayra-deluxe-ii/bathroom-1.avif", "/assets/rooms/ayra-deluxe-ii/bathroom-2.avif"] },
     ],
   },
 ];
@@ -212,3 +174,4 @@ export function coverImages(listing: Listing, count = 5): string[] {
 export function findListing(slug: string): Listing | undefined {
   return LISTINGS.find((l) => l.slug === slug);
 }
+

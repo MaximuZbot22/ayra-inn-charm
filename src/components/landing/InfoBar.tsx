@@ -11,7 +11,7 @@ const items = [
 
 export function InfoBar() {
   return (
-    <section id="info" className="relative -mt-10 sm:-mt-16 z-10 px-4 sm:px-6">
+    <section id="info" className="relative -mt-6 sm:-mt-16 z-10 px-4 sm:px-6">
       <Reveal className="mx-auto max-w-6xl">
         <div className="rounded-2xl bg-card shadow-soft border border-border/60 p-4 sm:p-6">
           <ul className="grid grid-cols-2 sm:grid-cols-5 gap-3 sm:gap-4">
